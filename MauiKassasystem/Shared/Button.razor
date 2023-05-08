@@ -1,0 +1,18 @@
+﻿<a href="@Href">
+    <span class="icon @Icon"></span>
+    <span>@Name</span>
+</a>
+
+
+
+@code {
+    [Parameter]
+    public string Href { get; set; } = "#";
+
+    [Parameter]
+    public string Icon { get; set; } = "";
+
+    [Parameter]
+    public string Name { get; set; } = "";
+
+}

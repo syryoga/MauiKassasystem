@@ -7,27 +7,29 @@
         </div>
         <h1 class="pagename">Kassasystem</h1>
         <div class="topbar-btn-wrapper">
-            <a class="button dark-box" href="/email-capture">
-                <img src="drawable/kassasturz_48.png" />
-                <span class="button-text">TAGESABSCHLUSS</span>
-            </a>
-            <a class="button dark-box" href="/email-capture">
-                <span class="button-text">STORNO</span>
-            </a>
-            <a class="button dark-box" href="/login-admin">
-                <img src="drawable/admin_login.png" />
-                <span class="button-text">ADMIN</span>
-            </a>
+           
+            <Button Href="/email-capture"
+                    Icon="icon-clipboard"
+                    Name="TAGESABSCHLUSS" />
+
+            <Button Href=""
+                    Icon="icon-bin"
+                    Name="STORNO" />
+                    
+            <Button Href="/login-admin"
+                    Icon="icon-user"
+                    Name="ADMIN" />
+        
         </div>
     </div>
     <div class="main">
-        <div class="main-wrapper">
+        <div class="main-wrapper" >
             <div class="beschreibung-box">
                 <div>Kategorie</div>
                 <div>Produkt</div>
                 <div>Bestellung</div>
             </div>
-            <div class="mp-column kategorie-box">
+            <div class="light-box kategorie-box">
                 @if (FakeDatabase.categorieList != null && FakeDatabase.categorieList.Count > 0)
                 {
                     <div class="kategorie-wrapper">
@@ -41,7 +43,7 @@
                     </div>
                 }
             </div>
-            <div class="mp-column produkt-box">
+            <div class="light-box produkt-box">
 
                 @if (curentCategory > 0)
                 {
@@ -87,17 +89,15 @@
                     <span class="to-pay">€ @FakeDatabase.summ.ToString("0.00")</span>
                 </div>
             </div>
-            <div class="buttons-box">
-
-                <a href="/bezahlungs-page" class="button dark-box @(FakeDatabase.orderList.Count < 1?"button-muted":"")">
-                    <img src="drawable/euro_64.png" />
-                    <span class="button-text">WECHSELGELD</span>
-
-                </a>
-                <a href="#" class="button dark-box @(FakeDatabase.orderList.Count < 1?"button-muted":"")">
-                    <img src="drawable/order_32.png" />
-                    <span class="button-text">ABSCHLUSS</span>
-                </a>
+            <div class="buttons-box light-box">
+                <Button 
+                    Href="/bezahlungs-page"
+                        Icon="icon-coin-euro"
+                        Name="WECHSELGELD"/>
+                <Button 
+                    Href="/abschluss-page"
+                        Icon="icon-checkmark"
+                        Name="ABSCHLUSS"/>
             </div>
         </div>
     </div>
@@ -113,3 +113,15 @@
     private int curentCategory = 0;
 
 }
+
+
+@*<div class="buttons-box light-box">
+    <Button Href="/bezahlungs-page"
+            Img="drawable/euro_64.png"
+            Name="WECHSELGELD"
+            class="@(FakeDatabase.orderList.Count < 1?"button-muted":"")" />
+    <Button Href="/abschluss-page"
+            Img="drawable/order_32.png"
+            Name="ABSCHLUSS"
+            class="@(FakeDatabase.orderList?.Count < 1?"button-muted":"")" />
+</div>*@

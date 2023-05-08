@@ -1,0 +1,31 @@
+a {
+    text-decoration: none;
+    color: var(--light);
+    background-color: var(--primary-color);
+    border: 3px solid var(--light);
+    border-radius: 10px;
+    display:grid;
+    grid-template-columns:auto 1fr;
+    padding:5px 10px
+}
+
+
+
+span{
+    align-self:center;
+    justify-self:center;
+    font-size:1.5rem;
+}
+
+.icon::before{
+   font-size:1.8rem;
+   margin:5px;
+}
+
+.topbar-btn-wrapper .icon::before{
+    font-size:1.1rem;
+}
+
+.topbar-btn-wrapper span {
+    font-size: 0.9rem;
+}
