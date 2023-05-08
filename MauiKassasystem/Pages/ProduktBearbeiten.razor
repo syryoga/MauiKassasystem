@@ -1,0 +1,44 @@
+﻿@page "/produkt-bearbeiten"
+@inject NavigationManager navman
+@inject DatabaseContext dbContext;
+
+<div class="admin-wrapper">
+    <div class="topbar">
+        <div class="logo-wrapper">
+            <a href="#"><img src="drawable/Logo_BBRZ.png" alt="BBRZ" height="50" /></a>
+        </div>
+        <h1 class="pagename">Produkt bearbeiten</h1>
+        <div class="topbar-btn-wrapper">
+            <a class="button-primary logout-btn" href="/"><span>ABMELDEN</span></a>
+        </div>
+    </div>
+
+
+
+    <div class="admin-btn-box">
+        <a class="admin-button button-primary" href="/produkt-erstellen">PRODUKT<br />ERSTELLEN</a>
+        <a class="admin-button button-primary" href="/produkt-bearbeiten">PRODUKT<br />BEARBEITEN</a>
+        <a class="admin-button button-primary" href="/">PASSWORT<br />ZUR&Uuml;CKSETZEN</a>
+        <a class="admin-button button-primary" href="/">ADMIN<br />E-MAIL &Auml;NDERN</a>
+    </div>
+
+    <div class="admin-form-wrapper">
+        <div class="dark-box admin-form-box">
+            <form action="#">
+
+                <p><label>Kategorie wählen:</label><input type="text" name="Kategorie" placeholder="Kategorie" /></p>
+                <p><label>Produktnamen eingeben:</label><input type="text" name="Produktname" placeholder="Name" /></p>
+                <p><label>Bild auswählen:</label><input type="select" name="Produktbild" placeholder="Bild" /></p>
+                <p><label>Preis eingeben:</label><input type="text" name="Produktpreis" placeholder="Preis" /> &euro;</p>
+                <p class="right-align"><input type="submit" class="admin-form-btn btn-inactive" value="Senden" />&nbsp;<input type="submit" class="admin-form-btn" value="Abbrechen" /></p>
+            </form>
+        </div>
+    </div>
+
+
+
+</div>
+
+@code {
+
+}

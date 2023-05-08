@@ -1,0 +1,31 @@
+
+
+.form-wrapper {
+    margin-top: 50px;
+    width: 60vw;
+    display: grid;
+    grid-template-rows: repeat(4, 40px);
+    grid-template-columns: 60% 20% 20%;
+    grid-row-gap: 15px;
+    grid-column-gap: 10px;
+    justify-self: center;
+}
+
+.ueberschrift {
+    grid-column: 1/4;
+    align-self: self-end;
+}
+
+.email-capture-input {
+    grid-column: 1/4;
+}
+
+.email-capture-button1 {
+    grid-column: 2;
+}
+
+.input-light {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #000;
+}

@@ -1,0 +1,138 @@
+.pay-page-wrapper {
+    display: grid;
+    grid-template-columns: 6fr 4fr;
+    grid-template-rows: 75vh 100px;
+    grid-gap: 10px;
+    margin: 10px;
+}
+
+/* Währung auswahl */
+.money-display {
+    padding: 5px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    justify-content: center;
+    min-height: fit-content;
+    padding-top: 40px;
+}
+
+.money-cell {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 100px;
+}
+
+    .money-cell > img {
+        grid-column: 1/4;
+        align-self: center;
+        justify-self: center;
+        padding-bottom: 5px;
+    }
+
+
+.money-minus-button {
+    align-self: flex-start;
+    justify-self: end;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--light);
+    position: relative;
+}
+
+    .money-minus-button::before {
+        content: "-";
+        font-size: x-large;
+        position: absolute;
+        left: 15px;
+        top: -1px;
+    }
+
+.money-quantity {
+    padding-top: 5px;
+    grid-column: 2;
+    align-self: flex-start;
+    justify-self: center;
+    text-align: center;
+    font-size: x-large;
+    font-weight: 600;
+}
+
+
+
+.placeholder {
+    color: var(--light);
+    display: inline-block;
+    vertical-align: top;
+    height: 30px;
+    width: 30px;
+    background-color: var(--primary-color);
+    border: 2px solid var(--light);
+    border-radius: 20px;
+}
+
+
+
+/* Bestellungen */
+.order-display {
+    padding: 15px;
+    display: grid;
+    grid-template-rows: 1fr 50px;
+}
+
+
+    .order-display > .dark-box {
+        padding: 15px;
+    }
+
+.summ {
+    align-items: center;
+    font-size: x-large;
+}
+
+
+/* Bestellzeile */
+.order-line {
+    display: grid;
+    grid-template-columns: 50px 1fr auto auto auto;
+    align-items: center;
+}
+
+/* Plus und minus Knöpfe */
+.add-button, .minus-button {
+    height: 30px;
+    width: 30px;
+    border: 1px solid var(--light);
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin: 5px;
+}
+
+/* Betragdisplay */
+.info-display {
+    padding: 15px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    text-align: end;
+    align-items: center;
+    font-size: x-large;
+}
+
+
+    .info-display > span {
+        display: inline-block;
+    }
+
+/* Buttons */
+.buttons-display {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+    padding: 15px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}

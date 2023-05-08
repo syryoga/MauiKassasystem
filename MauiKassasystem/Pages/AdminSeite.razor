@@ -1,0 +1,33 @@
+﻿@page "/admin-page"
+@inject NavigationManager navman
+
+
+<div class="admin-wrapper">
+    <div class="topbar">
+        <div class="logo-wrapper">
+            <a href="#"><img src="drawable/Logo_BBRZ.png" alt="BBRZ" height="50" /></a>
+        </div>
+        <h1 class="pagename">Admin-Bereich</h1>
+        <div class="topbar-btn-wrapper">
+            <a class="button-primary logout-btn" href="/"><span>ABMELDEN</span></a>
+        </div>
+    </div>
+
+
+
+    <div class="admin-btn-box">
+        <a class="admin-button button-primary" href="/produkt-erstellen">PRODUKT<br />ERSTELLEN</a>
+        <a class="admin-button button-primary" href="/produkt-bearbeiten">PRODUKT<br />BEARBEITEN</a>
+        <a class="admin-button button-primary" href="/">PASSWORT<br />ZUR&Uuml;CKSETZEN</a>
+        <a class="admin-button button-primary" href="/">ADMIN<br />E-MAIL &Auml;NDERN</a>
+    </div>
+
+    <div class="admin-form-wrapper">
+        <img class="dark-box admin-landing-icon" src="/drawable/icon_admin_512.png" height="200" />
+    </div>
+</div>
+
+@code {
+
+}
+

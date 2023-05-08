@@ -1,0 +1,185 @@
+.admin-wrapper {
+    display: grid;
+    grid-template-rows: 50px 1fr 50px;
+    grid-gap: 10px;
+}
+
+.admin-btn-box {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 5px;
+    text-align: center;
+    align-items: center;
+    border-bottom: 2px solid #0F2B48;
+    padding: 10px 10px 20px 10px;
+}
+
+.admin-button {
+    display: inline-block;
+    text-decoration: none;
+    font-size: smaller;
+    line-height: 1.2rem;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 2px solid white;
+}
+
+
+.admin-landing-icon {
+    grid-column-start: 2;
+    grid-column-end: 2;
+    margin: 100px auto;
+    padding: 20px 200px;
+}
+
+.admin-form-wrapper {
+    font-size: smaller;
+    display: grid;
+    grid-template-columns: 1fr 600px 1fr;
+}
+
+.admin-form-box {
+    grid-column-start: 2;
+    grid-column-end: 2;
+    margin-top: 100px;
+    padding: 40px 60px 0;
+}
+
+
+    .admin-form-box p {
+        margin-bottom: 30px;
+    }
+
+    .admin-form-box label {
+        display: inline-block;
+        width: 200px;
+        text-align: right;
+        padding-right: 20px;
+    }
+
+
+.admin-wrapper input, .admin-wrapper select {
+    border: none;
+    background-color: inherit;
+    color: white;
+    border-bottom: 1px solid black
+}
+
+.admin-wrapper select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 160px;
+}
+
+.admin-wrapper input:focus, .admin-wrapper input:active {
+    outline: none;
+    background-color: inherit;
+    border-bottom: 1px solid #93127c;
+}
+
+.admin-wrapper select:focus, .admin-wrapper select:active {
+    outline: none;
+    background-color: #0F2B48;
+    border-bottom: 1px solid #93127c;
+}
+
+.admin-wrapper select:invalid {
+    color: gray;
+}
+
+/* Button Styles*/
+
+.admin-wrapper input.admin-form-btn {
+    font-size: smaller;
+    text-decoration: none;
+    padding: 10px 25px;
+    min-width: 120px;
+    border: 2px solid white;
+    border-radius: 10px;
+}
+
+    .admin-wrapper input.admin-form-btn:active {
+        background-color: black;
+    }
+
+.right-align {
+    text-align: right;
+}
+
+.btn-inactive {
+    color: black;
+}
+
+    .btn-inactive:active {
+        color: black;
+    }
+
+/* Buttons /w Icon Styles */
+
+/* LOGOUT */
+
+.logout-btn {
+    display: table;
+    padding: 6px 15px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 12px;
+    background-color: #0F2B48;
+    color: white;
+}
+
+    .logout-btn span {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .logout-btn:before {
+        display: table-cell;
+        vertical-align: middle;
+        padding-right: 10px;
+        content: url('/drawable/admin_logout.png')
+    }
+
+/* LOGIN */
+
+.login-btn {
+    display: table;
+    padding: 6px 15px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 12px;
+    background-color: #0F2B48;
+    color: white;
+}
+
+    .login-btn span {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .login-btn:before {
+        display: table-cell;
+        vertical-align: middle;
+        padding-right: 10px;
+        content: url('/drawable/admin_login.png')
+    }
+
+/* GEAR-BUTTON */
+
+.gear-btn {
+    padding: 15px;
+    width: 32px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 12px;
+    background-color: #0F2B48;
+    color: white;
+}
+
+    .gear-btn:before {
+        display: table-cell;
+        vertical-align: middle;
+        padding-right: 10px;
+        content: url('/drawable/einstellungen_32.png')
+    }

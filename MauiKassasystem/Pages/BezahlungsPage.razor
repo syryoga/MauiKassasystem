@@ -1,0 +1,97 @@
+﻿@page "/bezahlungs-page"
+@using MauiKassasystem.Datenbank
+
+
+<div class="wrapper">
+    <div class="topbar">
+        <div class="logo-wrapper">
+            <a href="#"><img src="drawable/Logo_BBRZ.png" alt="BBRZ" height="50" /></a>
+        </div>
+        <h1 class="pagename">Geldeingabe</h1>
+        <div class="topbar-btn-wrapper">
+            <a class="button dark-box" href="/"><img src="drawable/back_32.png" /><span class="button-text">ABBRECHEN</span></a>
+        </div>
+    </div>
+    <div class="main">
+        <div class="pay-page-wrapper">
+            <div class="money-display light-box">
+                @foreach (var nominal in FakeDatabase.moneyList)
+                {
+                    <div class="cent1 money-cell">
+                        <img src="@nominal.Picture.Bild" alt="@nominal.Picture.Name" @onclick="(()=>CountUp(nominal))" style="height:@(nominal.PictureHeight > 0.00? nominal.PictureHeight : 100)%">
+                        <div class="money-minus-button dark-box @(nominal.Counter > 0 ? "":"hidden")" @onclick="(()=> CountDown(nominal))"></div>
+                        <div class="money-quantity @(nominal.Counter > 0 ? "":"hidden")">@nominal.Counter</div>
+                    </div>
+                }
+            </div>
+            <div class="order-display light-box">
+                <div class="dark-box">
+                    @if (FakeDatabase.orderList.Count > 0)
+                    {
+                        @foreach (var product in FakeDatabase.orderList)
+                        {
+                            <div class="order-line">
+                                <span>@product.Value.ToString()x</span>
+                                <span>@product.Key.ProduktName</span>
+                                <span>€ @(product.Key.ProduktPreis * product.Value)</span>
+                                <div class="minus-button" style="cursor:pointer" @onclick="()=>FakeDatabase.RemoveProduct(product.Key)">-</div>
+                                <div class="add-button" style="cursor:pointer" @onclick="()=>FakeDatabase.AddProduktToOrderList(product.Key)">+</div>
+                            </div>
+                        }
+                    }
+
+                </div>
+                <div class="summ">
+                    <span>Summe:</span>
+                    <span>€ @FakeDatabase.summ</span>
+                </div>
+            </div>
+            <div class="info-display light-box">
+                <span>Erhaltener Betrag:</span>
+                <span>€ @FakeDatabase.recivedMoney.ToString("0.00")</span>
+            </div>
+            <div class="buttons-display light-box">
+                <a href="/wechselgeld-page" class="button dark-box @(FakeDatabase.summ > FakeDatabase.recivedMoney? "button-muted":"")">
+                    <img src="drawable/euro_64.png" />
+                    <span class="button-text">WECHSELGELD</span>
+
+                </a>
+                <a href="/" class="button dark-box" @onclick="(()=> RessetMoney())">
+                    <img src="drawable/left_arrow.png" />
+                    <span class="button-text">ZURÜCK</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+@code {
+
+
+
+    private void CountUp(Money money)
+    {
+        money.Counter += 1;
+        FakeDatabase.recivedMoney += money.Nominal;
+    }
+    private void CountDown(Money money)
+    {
+        money.Counter -= 1;
+        FakeDatabase.recivedMoney -= money.Nominal;
+    }
+
+
+    private void RessetMoney()
+    {
+        foreach (var nominal in FakeDatabase.moneyList)
+        {
+            nominal.Counter = 0;
+        }
+        FakeDatabase.recivedMoney = 0;
+    }
+
+}

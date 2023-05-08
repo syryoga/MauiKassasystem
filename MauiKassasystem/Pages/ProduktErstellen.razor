@@ -1,0 +1,74 @@
+﻿@page "/produkt-erstellen"
+@inject NavigationManager navman
+@inject DatabaseContext dbContext;
+
+
+<div class="admin-wrapper">
+    <div class="topbar">
+        <div class="logo-wrapper">
+            <a href="#"><img src="drawable/Logo_BBRZ.png" alt="BBRZ" height="50" /></a>
+        </div>
+        <h1 class="pagename">Produkt erstellen</h1>
+        <div class="topbar-btn-wrapper">
+            <a class="button-primary logout-btn" href="/"><span>ABMELDEN</span></a>
+        </div>
+    </div>
+
+
+
+    <div class="admin-btn-box">
+        <a class="admin-button button-primary" href="/produkt-erstellen">PRODUKT<br />ERSTELLEN</a>
+        <a class="admin-button button-primary" href="/produkt-bearbeiten">PRODUKT<br />BEARBEITEN</a>
+        <a class="admin-button button-primary" href="/">PASSWORT<br />ZUR&Uuml;CKSETZEN</a>
+        <a class="admin-button button-primary" href="/">ADMIN<br />E-MAIL &Auml;NDERN</a>
+    </div>
+
+    <div class="admin-form-wrapper">
+        <div class="dark-box admin-form-box">
+            <form action="#">
+
+                <p>
+                    <label>Kategorie wählen:</label>
+                    <select name="Kategorie" required>
+                        <option value="" disabled selected hidden>Kategorie</option>
+                        <option value="Warm">Warm</option>
+                        <option value="Kalt">Kalt</option>
+                        <option value="Snack">Snack</option>
+                        <option value="Sonstiges">Sonstiges</option>
+                    </select>
+                </p>
+                <p>
+                    <label>Produktnamen eingeben:</label>
+                    <input type="text" name="Produktname" placeholder="Name" />
+                </p>
+                <p>
+                    <label>Bild auswählen:</label>
+                    <select name="Produktbild" required>
+                        <option value="" disabled selected hidden>Bild wählen</option>
+                        <option value="Warm">Bild 1</option>
+                        <option value="Kalt">Icon 2</option>
+                        <option value="Snack">Bild 3</option>
+                        <option value="Sonstiges">Icon 4</option>
+                    </select>
+                </p>
+                <p>
+                    <label>Preis eingeben:</label>
+                    <input type="text" name="Produktpreis" placeholder="Preis" /> &euro;
+                </p>
+                <p class="right-align">
+                    <input type="submit" class="admin-form-btn" value="ERSTELLEN" />&nbsp;<input type="reset" class="admin-form-btn" value="ABBRECHEN" />
+                </p>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+@code {
+    Produkt product = new Produkt();
+
+    protected async Task CreateNewProduct()
+    {
+        await dbContext.CreateProductAsync(product);
+    }
+}

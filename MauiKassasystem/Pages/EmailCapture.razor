@@ -1,0 +1,75 @@
+﻿@page "/email-capure"
+@using MauiKassasystem.Datenbank
+@inject DatabaseContext dbContext
+@inject NavigationManager navMan
+<div class="wrapper">
+    <div class="topbar">
+        <div class="logo-wrapper">
+            <a href="#"><img src="drawable/Logo_BBRZ.png" alt="BBRZ" height="50" /></a>
+        </div>
+        <h1 class="pagename">Kassasystem</h1>
+        <div class="topbar-btn-wrapper">
+            <a class="m-button button-primary" href="/">ADMIN</a>
+        </div>
+    </div>
+
+    @if (!IsEmailExist)
+    {
+        <div class="main">
+            <div class="form-wrapper">
+                <p class="ueberschrift">Bitte geben Sie hier die Admin-E-Mail ein:</p>
+                <input class="email-capture-input input-light" type="email" placeholder="test@test.com" @bind="NewEmail">
+                <input class="email-capture-input input-light" type="email" placeholder="test@test.com" @bind="ConfirmNewEmail">
+
+                <button class="email-capture-button1" @onclick="SaveEmail" disabled="@(!IsEmailValid)">SPEICHERN</button>
+                <button class="email-capture-button2" @onclick="ResetEmail" disabled="@(!IsEmailValid)">ZURÜCKSETZEN</button>
+            </div>
+        </div>
+
+    }
+
+</div>
+
+@code {
+    private string NewEmail = "";
+    private string ConfirmNewEmail = "";
+    private bool IsEmailExist = false;
+    private List<string> EmailList = new List<string>();
+
+
+    private bool IsEmailValid
+    {
+        get
+        {
+            return !string.IsNullOrEmpty(NewEmail) && !string.IsNullOrEmpty(ConfirmNewEmail) && AreEmailMatching();
+        }
+    }
+    private void SaveEmail()
+    {
+        if (EmailList.Count == 0 && !string.IsNullOrEmpty(NewEmail) && !string.IsNullOrEmpty(ConfirmNewEmail) && AreEmailMatching())
+        {
+            EmailList.Add(NewEmail);
+            IsEmailExist = false;
+            NewEmail = "";
+            ConfirmNewEmail = "";
+            navMan.NavigateTo("/");
+        }
+        else
+        {
+            IsEmailExist = true;
+        }
+    }
+
+    private void ResetEmail()
+    {
+        NewEmail = "";
+        ConfirmNewEmail = "";
+    }
+
+    //Überprüft das AdminPasswort
+    private bool AreEmailMatching()
+    {
+        return NewEmail == ConfirmNewEmail;
+    }
+
+}

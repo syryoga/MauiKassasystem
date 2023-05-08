@@ -1,0 +1,147 @@
+﻿@page "/login-admin"
+@using MauiKassasystem.Datenbank
+@*@inject DatabaseContext dbContext*@
+@inject NavigationManager navman
+
+<div class="wrapper">
+    <div class="topbar">
+        <div class="logo-wrapper">
+            <a href="#"><img src="drawable/Logo_BBRZ.png" alt="BBRZ" height="50" /></a>
+        </div>
+        <h1 class="pagename">Administrator</h1>
+        <div class="topbar-btn-wrapper">
+            <a class="button dark-box" href="/">
+                <img src="drawable/admin_login.png" />
+                <span class="button-text">Abbrechen</span>
+            </a>
+        </div>
+    </div>
+    <div class="main-wrapper">
+        @if (!IsAuthenticated)
+        {
+            <div>
+
+                @if (!IsResettingPassword)
+                {
+                    <h2>Passwort:</h2>
+                    <input type="password" @bind-value="@Password" />
+                    <br />
+                    <button class="m-button button-primary" @onclick="Login">Anmelden</button>
+                    <button class="m-button button-primary" @onclick="StartResetPassword">Passwort zurücksetzen</button>
+                    <br />
+                }
+                else
+                {
+
+                    @if (!IsMasterPassword)
+                    {
+                        <h2>Mit Masterpasswort anmelden</h2>
+                        <input type="password" @bind-value="@Password" />
+                        <br />
+                        <button class="m-button button-primary" @onclick="AreMasterPasswordsMatching">Anmelden</button>
+                    }
+
+                    @if (IsMasterPassword)
+                    {
+                        <h3>Bitte geben sie ein neus Passwort ein:</h3>
+                        <input type="password" @bind-value="@NewPassword" @bind-value:event="oninput" />
+                        <br />
+                        <input type="password" @bind-value="@ConfirmNewPassword" @bind-value:event="oninput" @onchange="CheckPasswordMatch" />
+                        <br />
+                        @if (ShowPasswordMismatchError)
+                        {
+                            <p style="color: red;">Die eingaben stimmen nicht überein.</p>
+                        }
+                        <button class="m-button button-primary" @onclick="FakeDatabase.SaveNewPassword" disabled="@(!ArePasswordsMatching())">Speichern</button>
+                        <button class="m-button button-primary" @onclick="CancelResetPassword">Abbrechen</button>
+                        <br />
+
+                    }
+                }
+            </div>
+        }
+    </div>
+    
+</div>
+@code {
+    static public string Password = "";
+    static public bool IsAuthenticated = false;
+    static public bool IsMasterPassword = false;
+    static public string MasterPassword = "User123!";
+    //private List<string> AdminPasswords = new List<string>();
+
+    // Reset Password fields
+    static public bool IsResettingPassword = false;
+    static public string NewPassword = "";
+    static public string ConfirmNewPassword = "";
+    static public bool ShowPasswordMismatchError = false;
+
+    //Admin Login
+    private void Login()
+    {
+        if (FakeDatabase.adminzugangsdaten.AdminPassword == Password)
+        {
+            IsAuthenticated = true;
+            navman.NavigateTo("/admin-page");
+        }
+    }
+
+    static public void StartResetPassword()
+    {
+        IsResettingPassword = true;
+        Password = "";
+    }
+
+    static public void CancelResetPassword()
+    {
+        IsResettingPassword = false;
+        NewPassword = "";
+        ConfirmNewPassword = "";
+        ShowPasswordMismatchError = false;
+    }
+
+    ////Löscht das alte Passwort aus der Liste und speichert das neue
+    //private void SaveNewPassword()
+    //{
+    //    if (Password == MasterPassword)
+    //    {
+    //        if (ArePasswordsMatching())
+    //        {
+    //            FakeDatabase.adminzugangsdaten.AdminPassword = NewPassword;
+    //            IsAuthenticated = false; // Log out the user
+    //            IsResettingPassword = false; // Reset the password reset state
+    //            NewPassword = ""; // Reset the password input fields
+    //            ConfirmNewPassword = "";
+    //            ShowPasswordMismatchError = false;
+    //            StateHasChanged(); // Reload the component
+    //        }
+    //        else
+    //        {
+    //            ShowPasswordMismatchError = true;
+    //        }
+
+
+    //    }
+    //}
+
+    //Überprüft das AdminPasswort
+    static public bool ArePasswordsMatching()
+    {
+        return NewPassword == ConfirmNewPassword;
+    }
+
+    //Überprüft das MasterPasswort
+    static public void AreMasterPasswordsMatching()
+    {
+        if (Password == MasterPassword)
+        {
+            IsMasterPassword = true;
+        }
+    }
+
+    static public void CheckPasswordMatch()
+    {
+        ShowPasswordMismatchError = NewPassword != ConfirmNewPassword;
+    }
+
+}

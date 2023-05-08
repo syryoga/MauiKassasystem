@@ -1,0 +1,109 @@
+/*######## Farb-Variablen ##################*/
+:root {
+    --light: white;
+    --background: #D8DCE9;
+    --light-color: #A9AFC1;
+    --primary-color: #0F2B48;
+}
+/*##########################################*/
+
+* {
+    margin: 0;
+    padding: 0;
+}
+/*ScrollBar hidden*/
+::-webkit-scrollbar {
+    width: 0;
+}
+
+
+body {
+    background-color: var(--background);
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--primary-color);
+}
+
+h1 {
+    font-style: italic;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--primary-color);
+    font-weight: normal;
+    text-align: center;
+}
+
+.main {
+    display: grid;
+}
+
+.dark-box {
+    background-color: var(--primary-color);
+    color: var(--light);
+    border-radius: 10px;
+    border: 3px solid var(--light);
+}
+
+.light-box {
+    color: var(--primary-color);
+    background-color: var(--light-color);
+    border: 3px solid var(--primary-color);
+    border-radius: 10px;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.button {
+    text-align: center;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    padding: 5px 10px;
+    text-decoration: none;
+    align-items: center;
+}
+
+
+.button-muted {
+    background-color: gray;
+    pointer-events: none;
+}
+
+.button-text {
+    padding-left: 5px;
+}
+
+.pagename {
+    font-size: xx-large;
+}
+
+
+
+.wrapper {
+    display: grid;
+    grid-template-rows: 50px 1fr;
+}
+
+.topbar {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    align-items: center;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.topbar-btn-wrapper {
+    justify-self: end;
+    margin-right: 10px;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(3, auto);
+}
+
+    .topbar-btn-wrapper img {
+        height: 20px;
+    }
+
+.button-primary {
+    background-color: var(--primary-color);
+    color: var(--light);
+}

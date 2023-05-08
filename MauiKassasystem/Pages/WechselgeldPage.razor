@@ -1,0 +1,99 @@
+﻿@page "/wechselgeld-page"
+
+
+
+<div class="wrapper">
+    <div class="topbar">
+        <div class="logo-wrapper">
+            <a href="#"><img src="drawable/Logo_BBRZ.png" alt="BBRZ" height="50" /></a>
+        </div>
+        <h1 class="pagename">Geldeingabe</h1>
+        <div class="topbar-btn-wrapper">
+            <a class="button dark-box" href="/"><img src="drawable/back_32.png" /><span class="button-text">ABBRECHEN</span></a>
+        </div>
+    </div>
+    <div class="main">
+        <div class="pay-page-wrapper">
+            <div class="money-display light-box">
+                @foreach (var nominal in FakeDatabase.moneyList)
+                {
+                    <div class="cent1 money-cell @(nominal.Counter <= 0 ? "hidden":"")">
+                        <img src="@nominal.Picture.Bild" alt="@nominal.Picture.Name" style="height:@(nominal.PictureHeight > 0.00? nominal.PictureHeight : 100)%">
+
+                        <div class="money-quantity ">@nominal.Counter X</div>
+                    </div>
+                }
+            </div>
+            <div class="order-display light-box">
+                <div class="dark-box">
+                    @if (FakeDatabase.orderList.Count > 0)
+                    {
+                        @foreach (var product in FakeDatabase.orderList)
+                        {
+                            <div class="order-line">
+                                <span>@product.Value.ToString()x</span>
+                                <span>@product.Key.ProduktName</span>
+                                <span>€ @(product.Key.ProduktPreis * product.Value)</span>
+                            </div>
+                        }
+                    }
+
+                </div>
+                <div class="summ">
+                    <span>Summe:</span>
+                    <span>€ @FakeDatabase.summ.ToString("0.00")</span>
+                </div>
+                <div class="summ">
+                    <span>Erhalten:</span>
+                    <span>€ @FakeDatabase.recivedMoney.ToString("0.00")</span>
+                </div>
+            </div>
+            <div class="info-display light-box">
+                <span>Wechselgeld:</span>
+                <span>€ @(FakeDatabase.recivedMoney - FakeDatabase.summ)</span>
+            </div>
+            <div class="buttons-display light-box">
+                <a href="#" class="button dark-box double-button @(FakeDatabase.orderList.Count < 1?"button-muted":"")">
+                    <img src="drawable/order_32.png" />
+                    <span class="button-text">ABSCHLUSS</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+@code {
+    decimal exchangeMoney = FakeDatabase.recivedMoney - FakeDatabase.summ;
+
+    protected override void OnInitialized()
+    {
+        foreach (var money in FakeDatabase.moneyList)
+        {
+            money.Counter = 0;
+        }
+
+
+        for (int i = FakeDatabase.moneyList.Count - 1; i >= 0; i--)
+        {
+            while (exchangeMoney >= FakeDatabase.moneyList[i].Nominal)
+            {
+                exchangeMoney = exchangeMoney - FakeDatabase.moneyList[i].Nominal;
+                FakeDatabase.moneyList[i].Counter += 1;
+            }
+        }
+
+        //foreach (var money in FakeDatabase.moneyList)
+        //{
+        //    exchangeMoney += money.Nominal;
+        //}
+
+    }
+
+
+
+
+}
