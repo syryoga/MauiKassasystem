@@ -1,4 +1,4 @@
-﻿<a href="@Href">
+﻿<a href="@Href" class="@Class @(IsDisabled ? "button-muted" : "")" @onclick=OnClickAction>
     <span class="icon @Icon"></span>
     <span>@Name</span>
 </a>
@@ -15,4 +15,12 @@
     [Parameter]
     public string Name { get; set; } = "";
 
+    [Parameter]
+    public bool IsDisabled { get; set; } = false;
+
+    [Parameter]
+    public string Class { get; set; } = "";
+
+    [Parameter]
+    public Action OnClickAction { get; set; }
 }

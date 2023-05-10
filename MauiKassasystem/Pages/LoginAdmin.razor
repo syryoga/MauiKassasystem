@@ -10,10 +10,9 @@
         </div>
         <h1 class="pagename">Administrator</h1>
         <div class="topbar-btn-wrapper">
-            <a class="button dark-box" href="/">
-                <img src="drawable/admin_login.png" />
-                <span class="button-text">Abbrechen</span>
-            </a>
+            <Button Href="/"
+                    Icon="icon-cross"
+                    Name="ABBRECHEN" />
         </div>
     </div>
     <div class="main-wrapper">
@@ -24,10 +23,10 @@
                 @if (!IsResettingPassword)
                 {
                     <h2>Passwort:</h2>
-                    <input type="password" @bind-value="@Password" />
+                    <input type="password" @bind-value="@Password" placeholder="Passwort"/>
                     <br />
-                    <button class="m-button button-primary" @onclick="Login">Anmelden</button>
                     <button class="m-button button-primary" @onclick="StartResetPassword">Passwort zurücksetzen</button>
+                    <button class="m-button button-primary" @onclick="Login">Anmelden</button>
                     <br />
                 }
                 else
@@ -36,7 +35,7 @@
                     @if (!IsMasterPassword)
                     {
                         <h2>Mit Masterpasswort anmelden</h2>
-                        <input type="password" @bind-value="@Password" />
+                        <input type="password" @bind-value="@Password"/>
                         <br />
                         <button class="m-button button-primary" @onclick="AreMasterPasswordsMatching">Anmelden</button>
                     }

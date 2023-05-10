@@ -7,13 +7,15 @@
         <div class="logo-wrapper">
             <a href="#"><img src="drawable/Logo_BBRZ.png" alt="BBRZ" height="50" /></a>
         </div>
-        <h1 class="pagename">Geldeingabe</h1>
+        <h1 class="pagename">Wechselgeld</h1>
         <div class="topbar-btn-wrapper">
-            <a class="button dark-box" href="/"><img src="drawable/back_32.png" /><span class="button-text">ABBRECHEN</span></a>
+                <Button Href="/"
+                        Icon="icon-cross"
+                        Name="ABBRECHEN" />
         </div>
     </div>
     <div class="main">
-        <div class="pay-page-wrapper">
+        <div class="main-wrapper">
             <div class="money-display light-box">
                 @foreach (var nominal in FakeDatabase.moneyList)
                 {
@@ -52,11 +54,11 @@
                 <span>Wechselgeld:</span>
                 <span>€ @(FakeDatabase.recivedMoney - FakeDatabase.summ)</span>
             </div>
-            <div class="buttons-display light-box">
-                <a href="#" class="button dark-box double-button @(FakeDatabase.orderList.Count < 1?"button-muted":"")">
-                    <img src="drawable/order_32.png" />
-                    <span class="button-text">ABSCHLUSS</span>
-                </a>
+            <div class="buttons-box light-box">
+                <Button Href="/"
+                        Icon="icon-checkmark"
+                        Name="ABSCHLUSS" 
+                        Class="double-button"/>
             </div>
         </div>
 

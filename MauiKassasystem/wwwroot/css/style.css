@@ -1,9 +1,11 @@
 /*######## Farb-Variablen ##################*/
 :root {
     --light: white;
+    --dark: black;
     --background: #D8DCE9;
     --light-color: #A9AFC1;
     --primary-color: #0F2B48;
+    --secondary-color: #93127c;
 }
 /*##########################################*/
 
@@ -31,8 +33,11 @@ h1 {
     text-align: center;
 }
 
+
 .main {
     display: grid;
+    height: calc(100vh - 50px);
+    overflow: hidden;
 }
 
 .dark-box {
@@ -65,7 +70,7 @@ h1 {
 
 
 .button-muted {
-    background-color: gray;
+    background-color: gray !important;
     pointer-events: none;
 }
 

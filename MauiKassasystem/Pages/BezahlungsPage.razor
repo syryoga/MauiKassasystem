@@ -9,11 +9,13 @@
         </div>
         <h1 class="pagename">Geldeingabe</h1>
         <div class="topbar-btn-wrapper">
-            <a class="button dark-box" href="/"><img src="drawable/back_32.png" /><span class="button-text">ABBRECHEN</span></a>
+            <Button Href="/"
+                    Icon="icon-cross"
+                    Name="ABBRECHEN" />
         </div>
     </div>
     <div class="main">
-        <div class="pay-page-wrapper">
+        <div class="main-wrapper">
             <div class="money-display light-box">
                 @foreach (var nominal in FakeDatabase.moneyList)
                 {
@@ -50,16 +52,18 @@
                 <span>Erhaltener Betrag:</span>
                 <span>€ @FakeDatabase.recivedMoney.ToString("0.00")</span>
             </div>
-            <div class="buttons-display light-box">
-                <a href="/wechselgeld-page" class="button dark-box @(FakeDatabase.summ > FakeDatabase.recivedMoney? "button-muted":"")">
-                    <img src="drawable/euro_64.png" />
-                    <span class="button-text">WECHSELGELD</span>
+            <div class="buttons-box light-box">
 
-                </a>
-                <a href="/" class="button dark-box" @onclick="(()=> RessetMoney())">
-                    <img src="drawable/left_arrow.png" />
-                    <span class="button-text">ZURÜCK</span>
-                </a>
+                <Button Href="/wechselgeld-page"
+                        Icon="icon-coin-euro"
+                        Name="WECHSELGELD"
+                        IsDisabled=@(FakeDatabase.summ > FakeDatabase.recivedMoney) />
+
+                <Button Href="/"
+                        Icon="icon-arrow-left"
+                        Name="ZURÜCK"
+                        OnClickAction="@RessetMoney" />
+          
             </div>
         </div>
 
@@ -70,9 +74,6 @@
 
 
 @code {
-
-
-
     private void CountUp(Money money)
     {
         money.Counter += 1;

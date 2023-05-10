@@ -1,3 +1,48 @@
+.wrapper{
+    min-height:100vh;
+}
+
+.main-wrapper {
+    margin: 10px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 50px 1fr 100px;
+    gap: 10px;
+}
+
+.main-wrapper > div{
+    grid-row:2;
+    grid-column:2/5;
+}
+
+input {
+    font-size:1.2rem;
+        border:none;
+        background-color:transparent;
+        border-bottom: 2px solid var(--dark);
+        width: 100%;
+    }
+    input:focus {
+        border: none;
+        outline: none;
+        background-color: transparent;
+        border-bottom: 3px solid var(--secondary-color);
+        caret-color: var(--secondary-color);
+        
+    }
+
+
+button {
+    border: 3px solid var(--light);
+    border-radius: 10px;
+    height: 50px;
+    width: 20%;
+    margin-top: 15px;
+    word-wrap: break-word;
+    line-height: 1rem;
+    float: right;
+    margin-left:10px;
+}
 
 
 

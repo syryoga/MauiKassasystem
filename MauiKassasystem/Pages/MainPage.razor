@@ -7,7 +7,7 @@
         </div>
         <h1 class="pagename">Kassasystem</h1>
         <div class="topbar-btn-wrapper">
-           
+
             <Button Href="/email-capture"
                     Icon="icon-clipboard"
                     Name="TAGESABSCHLUSS" />
@@ -15,15 +15,15 @@
             <Button Href=""
                     Icon="icon-bin"
                     Name="STORNO" />
-                    
+
             <Button Href="/login-admin"
                     Icon="icon-user"
                     Name="ADMIN" />
-        
+
         </div>
     </div>
     <div class="main">
-        <div class="main-wrapper" >
+        <div class="main-wrapper">
             <div class="beschreibung-box">
                 <div>Kategorie</div>
                 <div>Produkt</div>
@@ -90,14 +90,16 @@
                 </div>
             </div>
             <div class="buttons-box light-box">
-                <Button 
-                    Href="/bezahlungs-page"
+
+                <Button Href="/bezahlungs-page"
                         Icon="icon-coin-euro"
-                        Name="WECHSELGELD"/>
-                <Button 
-                    Href="/abschluss-page"
+                        Name="WECHSELGELD"
+                        IsDisabled=@(FakeDatabase.summ == 0) />
+
+                <Button Href="/abschluss-page"
                         Icon="icon-checkmark"
-                        Name="ABSCHLUSS"/>
+                        Name="ABSCHLUSS"
+                        IsDisabled=@(FakeDatabase.summ == 0) />
             </div>
         </div>
     </div>
@@ -115,13 +117,3 @@
 }
 
 
-@*<div class="buttons-box light-box">
-    <Button Href="/bezahlungs-page"
-            Img="drawable/euro_64.png"
-            Name="WECHSELGELD"
-            class="@(FakeDatabase.orderList.Count < 1?"button-muted":"")" />
-    <Button Href="/abschluss-page"
-            Img="drawable/order_32.png"
-            Name="ABSCHLUSS"
-            class="@(FakeDatabase.orderList?.Count < 1?"button-muted":"")" />
-</div>*@
