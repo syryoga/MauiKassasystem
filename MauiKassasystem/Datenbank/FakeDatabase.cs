@@ -77,24 +77,24 @@ namespace MauiKassasystem.Datenbank
 
         static public void AddProduktToOrderList(Produkt produkt)
         {
-            if (!FakeDatabase.orderList.ContainsKey(produkt))
+            if (!orderList.ContainsKey(produkt))
             {
-                FakeDatabase.orderList.Add(produkt, 1);
+                orderList.Add(produkt, 1);
             }
             else
             {
-                FakeDatabase.orderList[produkt] += 1;
+                orderList[produkt] += 1;
             }
             TotalPriceCalculation();
         }
 
         static public void RemoveProduct(Produkt produkt)
         {
-            FakeDatabase.orderList[produkt] -= 1;
+            orderList[produkt] -= 1;
 
-            if (FakeDatabase.orderList[produkt] < 1)
+            if (orderList[produkt] < 1)
             {
-                FakeDatabase.orderList.Remove(produkt);
+                orderList.Remove(produkt);
             }
             TotalPriceCalculation();
         }
@@ -103,7 +103,7 @@ namespace MauiKassasystem.Datenbank
         {
             decimal price = 0;
 
-            foreach (var product in FakeDatabase.orderList)
+            foreach (var product in orderList)
             {
                 price += product.Value * product.Key.ProduktPreis;
             }
@@ -117,7 +117,7 @@ namespace MauiKassasystem.Datenbank
             {
                 if (LoginAdmin.ArePasswordsMatching())
                 {
-                    FakeDatabase.adminzugangsdaten.AdminPassword = LoginAdmin.NewPassword;
+                    adminzugangsdaten.AdminPassword = LoginAdmin.NewPassword;
                     LoginAdmin.IsAuthenticated = false; // Log out the user
                     LoginAdmin.IsResettingPassword = false; // Reset the password reset state
                     LoginAdmin.NewPassword = ""; // Reset the password input fields
@@ -133,6 +133,20 @@ namespace MauiKassasystem.Datenbank
 
             }
         }
+
+        static public void Finish()
+        {
+            orderList.Clear();
+            summ = 0;
+
+            foreach (var nominal in moneyList)
+            {
+                nominal.Counter = 0;
+            }
+            recivedMoney = 0;
+        }
     }
 }
+
+
 

@@ -87,5 +87,25 @@
 
 .order-display {
     padding-bottom: 0;
+  
 }
 
+.message {
+    grid-column: 1/5;
+    text-align: center;
+    font-size: 1.9rem;
+}
+.gif{
+    grid-column:1/5;
+    grid-row:2;
+    justify-self:center;
+    max-height:250px;
+
+}
+.instruction {
+    grid-column: 1/5;
+    grid-row:3;
+    text-align: center;
+    font-size: 1.9rem;
+    justify-self:center;
+}

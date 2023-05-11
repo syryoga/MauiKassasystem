@@ -26,7 +26,7 @@ input {
         border: none;
         outline: none;
         background-color: transparent;
-        border-bottom: 3px solid var(--secondary-color);
+        border-bottom: 2px solid var(--secondary-color);
         caret-color: var(--secondary-color);
         
     }

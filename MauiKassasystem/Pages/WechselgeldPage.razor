@@ -9,14 +9,21 @@
         </div>
         <h1 class="pagename">Wechselgeld</h1>
         <div class="topbar-btn-wrapper">
-                <Button Href="/"
-                        Icon="icon-cross"
-                        Name="ABBRECHEN" />
+            <Button Href="/"
+                    Icon="icon-cross"
+                    Name="ABBRECHEN" />
         </div>
     </div>
     <div class="main">
         <div class="main-wrapper">
             <div class="money-display light-box">
+                @if (FakeDatabase.recivedMoney - FakeDatabase.summ == 0)
+                {
+                    <p class="message">Der gegebene Betrag stimmt <br /> mit der Summe überein!</p>
+                    <img class="gif" src="drawable/thumbs_up_animated.gif"/>
+                    <p class="instruction">Bestellund mittlels 'Abschluss'- Button <br>abschließen!</p>
+
+                }
                 @foreach (var nominal in FakeDatabase.moneyList)
                 {
                     <div class="cent1 money-cell @(nominal.Counter <= 0 ? "hidden":"")">
@@ -55,10 +62,11 @@
                 <span>€ @(FakeDatabase.recivedMoney - FakeDatabase.summ)</span>
             </div>
             <div class="buttons-box light-box">
-                <Button Href="/"
+                <Button Href="/abschluss-page"
                         Icon="icon-checkmark"
-                        Name="ABSCHLUSS" 
-                        Class="double-button"/>
+                        Name="ABSCHLUSS"
+                        Class="double-button"
+                        OnClickAction="@FakeDatabase.Finish" />
             </div>
         </div>
 
@@ -70,6 +78,7 @@
 
 @code {
     decimal exchangeMoney = FakeDatabase.recivedMoney - FakeDatabase.summ;
+
 
     protected override void OnInitialized()
     {
@@ -88,14 +97,12 @@
             }
         }
 
-        //foreach (var money in FakeDatabase.moneyList)
-        //{
-        //    exchangeMoney += money.Nominal;
-        //}
+
+
 
     }
 
-
+ 
 
 
 }

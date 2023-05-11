@@ -1,4 +1,13 @@
 ﻿@page "/abschluss-page"
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+
+
+
+
+<audio id="audioPlayer" autoplay>
+    <source src="Sounds/ka-ching.mp3" type="audio/mpeg" />
+</audio>
 
 <div class="wrapper">
     <div class="topbar">
@@ -7,13 +16,64 @@
         </div>
         <h1 class="pagename">Vielen Dank</h1>
         <div class="topbar-btn-wrapper">
-            <a class="m-button button-primary" href="/admin-seite">ADMIN</a>
+            <Button Href="/login-admin"
+                    Icon="icon-user"
+                    Name="ADMIN" />
         </div>
     </div>
-
+    <div class="main">
+        <div class="main-wrapper light-box">
+            <p>Bestellvorgang erfolgreich abgeschlossen!</p>
+            <img class="gif" src="drawable/giphy.gif" />
+            <div class="logo">
+            </div>
+            
+                <a class="button" href="/">
+                    <span class="icon icon-home"></span>
+                    <span>STARTSEITE</span>
+                </a>
+            
+        </div>
+    </div>
 </div>
 
 @code {
+    private bool isRedirected = false;
 
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        var timer = new System.Timers.Timer(300000000); // Timer for 3 seconds
+        timer.Elapsed += TimerElapsed;
+        timer.AutoReset = false; // Stop the timer after the first actuation
+        timer.Start();
+
+       
+    }
+
+ 
+
+    private void TimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
+    {
+        if (!isRedirected)
+        {
+            isRedirected = true;
+            NavigationManager.NavigateTo("/"); // Navigate to the "MainPage"
+        }
+    }
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+            await PlayAudio();
+    }
+
+    private async Task PlayAudio()
+    {
+        await JSRuntime.InvokeVoidAsync("eval", "document.getElementById('audioPlayer').play();");
+    }
+    
 }
 
