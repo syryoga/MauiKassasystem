@@ -96,10 +96,11 @@
                         Name="WECHSELGELD"
                         IsDisabled=@(FakeDatabase.summ == 0) />
 
-                <Button Href="/"
+                <Button Href="/abschluss-page"
                         Icon="icon-checkmark"
                         Name="ABSCHLUSS"
                         IsDisabled=@(FakeDatabase.summ == 0)
+                        OnClickAction="FakeDatabase.Cancel"
                          />
             </div>
         </div>

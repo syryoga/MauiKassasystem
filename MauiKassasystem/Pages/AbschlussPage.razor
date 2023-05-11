@@ -44,7 +44,7 @@
     {
         base.OnInitialized();
 
-        var timer = new System.Timers.Timer(300000000); // Timer for 3 seconds
+        var timer = new System.Timers.Timer(3000); // Timer for 3 seconds
         timer.Elapsed += TimerElapsed;
         timer.AutoReset = false; // Stop the timer after the first actuation
         timer.Start();

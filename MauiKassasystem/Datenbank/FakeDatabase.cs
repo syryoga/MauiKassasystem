@@ -134,7 +134,7 @@ namespace MauiKassasystem.Datenbank
             }
         }
 
-        static public void Finish()
+        static public void Cancel()
         {
             orderList.Clear();
             summ = 0;
