@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="main-wrapper">
-        @if (!IsAuthenticated)
+        @if (!FakeDatabase.IsAuthenticated)
         {
             <div>
 
@@ -26,7 +26,7 @@
                     <input type="password" @bind-value="@Password" placeholder="Passwort"/>
                     <br />
                     <button class="m-button button-primary" @onclick="StartResetPassword">Passwort zurücksetzen</button>
-                    <button class="m-button button-primary" @onclick="Login">Anmelden</button>
+                    <button class="m-button button-primary" @onclick="(()=>Login())">Anmelden</button>
                     <br />
                 }
                 else
@@ -35,7 +35,7 @@
                     @if (!IsMasterPassword)
                     {
                         <h2>Mit Masterpasswort anmelden</h2>
-                        <input type="password" @bind-value="@Password"/>
+                        <input type="password" autocomplete="off" @bind-value="@Password"/>
                         <br />
                         <button class="m-button button-primary" @onclick="AreMasterPasswordsMatching">Anmelden</button>
                     }
@@ -52,19 +52,26 @@
                             <p style="color: red;">Die eingaben stimmen nicht überein.</p>
                         }
                         <button class="m-button button-primary" @onclick="FakeDatabase.SaveNewPassword" disabled="@(!ArePasswordsMatching())">Speichern</button>
-                        <button class="m-button button-primary" @onclick="CancelResetPassword">Abbrechen</button>
+                        @*<button class="m-button button-primary" @onclick="CancelResetPassword">Abbrechen</button>*@
                         <br />
 
                     }
                 }
             </div>
         }
+        else
+        {
+            <p>Bereits angemeldet</p>
+        }
     </div>
-    
+
 </div>
+
+
 @code {
+
+
     static public string Password = "";
-    static public bool IsAuthenticated = false;
     static public bool IsMasterPassword = false;
     static public string MasterPassword = "123";
     //private List<string> AdminPasswords = new List<string>();
@@ -80,13 +87,14 @@
     {
         if (FakeDatabase.adminzugangsdaten.AdminPassword == Password)
         {
-            IsAuthenticated = true;
+            FakeDatabase.IsAuthenticated = true;
             navman.NavigateTo("/admin-page");
         }
     }
 
     static public void StartResetPassword()
     {
+
         IsResettingPassword = true;
         Password = "";
     }
@@ -124,6 +132,13 @@
     //}
 
     //Überprüft das AdminPasswort
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Password = "";
+    }
+
     static public bool ArePasswordsMatching()
     {
         return NewPassword == ConfirmNewPassword;
@@ -142,5 +157,7 @@
     {
         ShowPasswordMismatchError = NewPassword != ConfirmNewPassword;
     }
+
+
 
 }

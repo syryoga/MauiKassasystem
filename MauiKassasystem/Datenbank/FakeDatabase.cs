@@ -10,6 +10,9 @@ namespace MauiKassasystem.Datenbank
 {
     public static class FakeDatabase
     {
+        static public string Password = "";
+        static public bool IsAuthenticated = false;
+
         static public decimal recivedMoney = 0;
         static public decimal summ = 0.00m;
 
@@ -67,7 +70,7 @@ namespace MauiKassasystem.Datenbank
 
     };
 
-        static public Zugangsdaten adminzugangsdaten = new Zugangsdaten { AdminEmail = "test@test.com", AdminPassword = "User123" };
+        static public Zugangsdaten adminzugangsdaten = new Zugangsdaten { AdminEmail = "test@test.com", AdminPassword = "123" };
 
 
 
@@ -118,7 +121,7 @@ namespace MauiKassasystem.Datenbank
                 if (LoginAdmin.ArePasswordsMatching())
                 {
                     adminzugangsdaten.AdminPassword = LoginAdmin.NewPassword;
-                    LoginAdmin.IsAuthenticated = false; // Log out the user
+                    FakeDatabase.IsAuthenticated = false; // Log out the user
                     LoginAdmin.IsResettingPassword = false; // Reset the password reset state
                     LoginAdmin.NewPassword = ""; // Reset the password input fields
                     LoginAdmin.ConfirmNewPassword = "";

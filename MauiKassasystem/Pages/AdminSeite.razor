@@ -10,6 +10,7 @@
         <h1 class="pagename">Admin-Bereich</h1>
         <div class="topbar-btn-wrapper">
             <Button Href="/"
+                    OnClickAction="@Logout"
                     Icon="icon-exit"
                     Name="ABMELDEN" />
         </div>
@@ -29,7 +30,18 @@
     </div>
 </div>
 
+
+
 @code {
+    
+
+    void Logout()
+    {
+        FakeDatabase.IsAuthenticated = false;
+    }
+
+
+
 
 }
 
