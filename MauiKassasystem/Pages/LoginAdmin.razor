@@ -25,9 +25,24 @@
                     <h2>Passwort:</h2>
                     <input type="password" @bind-value="@Password" placeholder="Passwort"/>
                     <br />
-                    <button class="m-button button-primary" @onclick="StartResetPassword">Passwort zurücksetzen</button>
+                    <button class="m-button button-primary" @onclick="ShowPopup">Passwort zurücksetzen</button>
                     <button class="m-button button-primary" @onclick="(()=>Login())">Anmelden</button>
                     <br />
+
+                    //PopUp start
+                    @if (showPopup)
+                    {
+                        <div class="popup-container">
+                            <div class="popup-content">
+                                <h4>Achtung!!!</h4>
+                                <p>Wollen Sie wirklich zurücksetzen?</p>
+                                <button  class="m-button button-primary" @onclick="StartResetPassword">Zurücksetzen</button>
+                                <button class="m-button button-primary" @onclick="ClosePopup">Abrechen</button>
+                            </div>
+                        </div>
+                    }
+                    //PopUp end
+                    
                 }
                 else
                 {
@@ -69,7 +84,23 @@
 
 
 @code {
+    //Popup start
+    bool showPopup = false;
 
+    void ShowPopup()
+    {
+        showPopup = true;
+    }
+
+    void ClosePopup()
+    {
+        showPopup = false;
+    }
+    //Popup end
+
+
+
+ 
 
     static public string Password = "";
     static public bool IsMasterPassword = false;
