@@ -10,7 +10,7 @@
         </div>
         <h1 class="pagename">Administrator</h1>
         <div class="topbar-btn-wrapper">
-            <Button Href="/"
+            <Button OnClickAction="Logout"
                     Icon="icon-cross"
                     Name="ABBRECHEN" />
         </div>
@@ -121,6 +121,12 @@
             FakeDatabase.IsAuthenticated = true;
             navman.NavigateTo("/admin-page");
         }
+    }
+
+    private void Logout()
+    {
+        FakeDatabase.IsAuthenticated = false;
+        navman.NavigateTo("/");
     }
 
     public void StartResetPassword()
