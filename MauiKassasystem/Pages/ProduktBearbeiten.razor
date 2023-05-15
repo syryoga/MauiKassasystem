@@ -1,4 +1,4 @@
-﻿@page "/produkt-bearbeiten"
+﻿@page "/produkt-bearbeiten/{id}"
 @inject NavigationManager navman
 @inject DatabaseContext dbContext;
 
@@ -40,5 +40,11 @@
 </div>
 
 @code {
+    List<Produkt> products = new List<Produkt>();
+
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    //products = await dbContext.GetProductByIdAsync();
+    //}
 
 }

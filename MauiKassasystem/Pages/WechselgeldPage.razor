@@ -28,7 +28,7 @@
                 @foreach (var nominal in FakeDatabase.moneyList)
                 {
                     <div class="cent1 money-cell @(nominal.Counter <= 0 ? "hidden":"")">
-                        <img src="@nominal.Picture.Bild" alt="@nominal.Picture.Name" style="height:@(nominal.PictureHeight > 0.00? nominal.PictureHeight : 100)%">
+                        <img src="@nominal.ImageUrl" alt="@nominal.ImageUrl" style="height:@(nominal.PictureHeight > 0.00? nominal.PictureHeight : 100)%">
 
                         <div class="money-quantity ">@nominal.Counter X</div>
                     </div>

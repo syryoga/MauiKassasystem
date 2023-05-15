@@ -1,0 +1,22 @@
+﻿@page "/test-page"
+@inject NavigationManager navman
+@inject DatabaseContext dbContext
+
+@foreach (var item in catList)
+{
+    <p>@item.KategorieName</p>
+}
+
+
+
+
+@code {
+    List<Kategorie> catList = new List<Kategorie>();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        catList = await dbContext.AllCategoriesToListAsync();
+    }
+    
+}
