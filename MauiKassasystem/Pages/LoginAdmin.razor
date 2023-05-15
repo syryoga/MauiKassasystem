@@ -26,7 +26,7 @@
                     <input type="password" @bind-value="@Password" placeholder="Passwort"/>
                     <br />
                     <button class="m-button button-primary" @onclick="ShowPopup">Passwort zurücksetzen</button>
-                    <button class="m-button button-primary" @onclick="(()=>Login())">Anmelden</button>
+                    <button class="m-button button-primary" @onclick="Login">Anmelden</button>
                     <br />
 
                     //PopUp start
@@ -100,7 +100,7 @@
 
 
 
- 
+
 
     static public string Password = "";
     static public bool IsMasterPassword = false;
@@ -123,9 +123,9 @@
         }
     }
 
-    static public void StartResetPassword()
+    public void StartResetPassword()
     {
-
+        ClosePopup();
         IsResettingPassword = true;
         Password = "";
     }
