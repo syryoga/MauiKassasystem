@@ -11,6 +11,11 @@ namespace MauiKassasystem.Services
 {
     public class dbServices
     {
+        public dbServices()
+        {
+
+        }
+
         public string Password = "";
         public bool IsAuthenticated = false;
 
@@ -19,10 +24,7 @@ namespace MauiKassasystem.Services
 
         public Dictionary<Produkt, int> orderList = new Dictionary<Produkt, int>();
 
-        public dbServices() 
-        {
-            
-        }
+        
 
         
 
