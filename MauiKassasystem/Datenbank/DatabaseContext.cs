@@ -21,7 +21,7 @@ namespace MauiKassasystem.Datenbank
 
         public DatabaseContext()
         {
-            this._dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Kassa007DB.db"); ;
+            this._dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "KassaTest.db"); ;
         }
 
         private async Task InitDbAsync()
@@ -43,11 +43,15 @@ namespace MauiKassasystem.Datenbank
             await dbContext.CreateTableAsync<Money>();
             await dbContext.CreateTableAsync<Produkt>();
             await dbContext.CreateTableAsync<Verkauf>();
+            await dbContext.CreateTableAsync<Positionen>();
             await dbContext.CreateTableAsync<Zugangsdaten>();
 
             // ...Standard-Kategorien und -Produkte erstellen
             await CreateDefaultCategoriesAsync();
             await CreateDefaultProductsAsync();
+
+
+            await CreateFakeSaleAsync();
 
         }
 
@@ -110,7 +114,14 @@ namespace MauiKassasystem.Datenbank
 
         #region Verkäufe (Sales)
         // alle verkauften Produkte
-        public async Task CreateSaleAsync(Verkauf v)
+
+        public async Task SavePosAsync(Positionen p)
+        {
+            await InitDbAsync();
+            await dbContext.InsertAsync(p);
+        }
+
+        public async Task SaveSaleAsync(Verkauf v)
         {
             await InitDbAsync();
             await dbContext.InsertAsync(v);
@@ -120,10 +131,10 @@ namespace MauiKassasystem.Datenbank
             await InitDbAsync();
             await dbContext.DeleteAsync(v);
         }
-        public async Task<List<Verkauf>> AllSalesToListAsync()
+        public async Task<List<Positionen>> AllSalesToListAsync()
         {
             await InitDbAsync();
-            return await dbContext.Table<Verkauf>().ToListAsync();
+            return await dbContext.Table<Positionen>().ToListAsync();
         }
         #endregion
 
@@ -177,6 +188,25 @@ namespace MauiKassasystem.Datenbank
             await dbContext.InsertAsync(nussini);
         }
 
+        #endregion
+
+
+        #region Fake-Sales 
+
+        private async Task CreateFakeSaleAsync()
+        {
+            Positionen po1 = new Positionen { ProduktAnzahl=1, ProduktName="Klobesen", ProduktPreis=12, PositionGesamtpreis=12, VerkaufsId=2 };
+            await dbContext.InsertAsync(po1);
+
+            Positionen po2 = new Positionen { ProduktAnzahl=1, ProduktName="Kaffee", ProduktPreis=4, PositionGesamtpreis=4, VerkaufsId = 2 };
+            await dbContext.InsertAsync(po2);
+
+            Verkauf vk1 = new Verkauf { Datum=DateTime.Now };
+            Verkauf vk2 = new Verkauf { Datum=DateTime.Now };
+            await dbContext.InsertAsync(vk1);
+            await dbContext.InsertAsync(vk2);
+
+        }
         #endregion
     }
 }

@@ -2,21 +2,25 @@
 @inject NavigationManager navman
 @inject DatabaseContext dbContext
 
-@foreach (var item in catList)
+@*@foreach (var item in catList)
 {
     <p>@item.KategorieName</p>
+}*@
+
+@foreach (var item in poslist)
+{
+    <p>@item.ProduktName - @item.ProduktPreis - @item.ProduktAnzahl - @item.PositionGesamtpreis - Verkauf Id: @item.VerkaufsId</p>
 }
-
-
 
 
 @code {
     List<Kategorie> catList = new List<Kategorie>();
-
+    List<Positionen> poslist = new List<Positionen>();
 
     protected override async Task OnInitializedAsync()
     {
         catList = await dbContext.AllCategoriesToListAsync();
+        poslist = await dbContext.AllSalesToListAsync();
     }
     
 }
