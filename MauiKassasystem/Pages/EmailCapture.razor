@@ -9,7 +9,9 @@
         </div>
         <h1 class="pagename">Kassasystem</h1>
         <div class="topbar-btn-wrapper">
-            <a class="m-button button-primary" href="/">ADMIN</a>
+            <Button Href="/"
+                    Icon="icon-cross"
+                    Name="ABBRECHEN" />
         </div>
     </div>
 
@@ -17,12 +19,12 @@
     {
         <div class="main">
             <div class="form-wrapper">
-                <p class="ueberschrift">Bitte geben Sie hier die Admin-E-Mail ein:</p>
+                <h2 class="ueberschrift">Bitte geben Sie hier die Admin-E-Mail ein:</h2>
                 <input class="email-capture-input input-light" type="email" placeholder="test@test.com" @bind="NewEmail">
                 <input class="email-capture-input input-light" type="email" placeholder="test@test.com" @bind="ConfirmNewEmail">
 
-                <button class="email-capture-button1" @onclick="SaveEmail" disabled="@(!IsEmailValid)">SPEICHERN</button>
-                <button class="email-capture-button2" @onclick="ResetEmail" disabled="@(!IsEmailValid)">ZURÜCKSETZEN</button>
+                <button class="m-button button-primary" @onclick="SaveEmail" disabled="@(!IsEmailValid)">SPEICHERN</button>
+                <button class="m-button button-primary" @onclick="ResetEmail" disabled="@(!IsEmailValid)">ZURÜCKSETZEN</button>
             </div>
         </div>
 
