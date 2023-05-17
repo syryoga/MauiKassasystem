@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.Devices.AllJoyn;
+//using Windows.Devices.AllJoyn;
 
 namespace MauiKassasystem.Datenbank
 {
