@@ -31,27 +31,31 @@ namespace MauiKassasystem.Datenbank
             {
                 return;
             }
+            else
+            {
+                // Andernfalls...
 
-            // Andernfalls...
+                // ...DB Instanzieren
+                dbContext = new SQLiteAsyncConnection(_dbPath);
 
-            // ...DB Instanzieren
-            dbContext = new SQLiteAsyncConnection(_dbPath);
+                // ...Tabellen erstellen
+                await dbContext.CreateTableAsync<Bilder>();
+                await dbContext.CreateTableAsync<Kategorie>();
+                await dbContext.CreateTableAsync<Money>();
+                await dbContext.CreateTableAsync<Produkt>();
+                await dbContext.CreateTableAsync<Verkauf>();
+                await dbContext.CreateTableAsync<VerkaufProdukte>();
+                await dbContext.CreateTableAsync<Zugangsdaten>();
 
-            // ...Tabellen erstellen
-            await dbContext.CreateTableAsync<Bilder>();
-            await dbContext.CreateTableAsync<Kategorie>();
-            await dbContext.CreateTableAsync<Money>();
-            await dbContext.CreateTableAsync<Produkt>();
-            await dbContext.CreateTableAsync<Verkauf>();
-            await dbContext.CreateTableAsync<Positionen>();
-            await dbContext.CreateTableAsync<Zugangsdaten>();
-
-            // ...Standard-Kategorien und -Produkte erstellen
-            await CreateDefaultCategoriesAsync();
-            await CreateDefaultProductsAsync();
+                // ...Standard-Kategorien und -Produkte erstellen
+                await CreateDefaultCategoriesAsync();
+                await CreateDefaultProductsAsync();
 
 
-            await CreateFakeSaleAsync();
+                await CreateFakeSaleAsync();
+            }
+
+  
 
         }
 
@@ -115,7 +119,7 @@ namespace MauiKassasystem.Datenbank
         #region Verkäufe (Sales)
         // alle verkauften Produkte
 
-        public async Task SavePosAsync(Positionen p)
+        public async Task SavePosAsync(VerkaufProdukte p)
         {
             await InitDbAsync();
             await dbContext.InsertAsync(p);
@@ -131,10 +135,10 @@ namespace MauiKassasystem.Datenbank
             await InitDbAsync();
             await dbContext.DeleteAsync(v);
         }
-        public async Task<List<Positionen>> AllSalesToListAsync()
+        public async Task<List<VerkaufProdukte>> AllSalesToListAsync()
         {
             await InitDbAsync();
-            return await dbContext.Table<Positionen>().ToListAsync();
+            return await dbContext.Table<VerkaufProdukte>().ToListAsync();
         }
         #endregion
 
@@ -195,16 +199,13 @@ namespace MauiKassasystem.Datenbank
 
         private async Task CreateFakeSaleAsync()
         {
-            Positionen po1 = new Positionen { ProduktAnzahl=1, ProduktName="Klobesen", ProduktPreis=12, PositionGesamtpreis=12, VerkaufsId=2 };
-            await dbContext.InsertAsync(po1);
+            Verkauf vk1= new Verkauf { ProduktId=1, Anzahl=2, Einzelpreis=4, Gesamtpreis=8};
 
-            Positionen po2 = new Positionen { ProduktAnzahl=1, ProduktName="Kaffee", ProduktPreis=4, PositionGesamtpreis=4, VerkaufsId = 2 };
-            await dbContext.InsertAsync(po2);
-
-            Verkauf vk1 = new Verkauf { Datum=DateTime.Now };
-            Verkauf vk2 = new Verkauf { Datum=DateTime.Now };
             await dbContext.InsertAsync(vk1);
-            await dbContext.InsertAsync(vk2);
+
+            VerkaufProdukte vkp1 = new VerkaufProdukte { Datum = DateTime.Now, VerkaufsId = 1 };
+
+            await dbContext.InsertAsync(vkp1);
 
         }
         #endregion

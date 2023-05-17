@@ -9,13 +9,13 @@
 
 @foreach (var item in poslist)
 {
-    <p>@item.ProduktName - @item.ProduktPreis - @item.ProduktAnzahl - @item.PositionGesamtpreis - Verkauf Id: @item.VerkaufsId</p>
+    <p>Verkauf Nr.: @item.Id : @item.Datum.ToString("dd.MM.yyyy") - @item.VerkaufsId</p>
 }
 
 
 @code {
     List<Kategorie> catList = new List<Kategorie>();
-    List<Positionen> poslist = new List<Positionen>();
+    List<VerkaufProdukte> poslist = new List<VerkaufProdukte>();
 
     protected override async Task OnInitializedAsync()
     {

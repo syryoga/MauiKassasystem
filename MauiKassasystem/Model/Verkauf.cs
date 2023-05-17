@@ -10,7 +10,14 @@ namespace MauiKassasystem.Model
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        public DateTime Datum { get; set; } = DateTime.Now;
+
+        [ForeignKey("ProduktId")]
+        public int ProduktId { get; set; }
+
+        public int Anzahl { get; set; }    
+        public decimal Einzelpreis { get; set; }
+        public decimal Gesamtpreis { get; set; }
 
     }
 }
+
