@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MauiKassasystem.Model
 {
-    public class VerkaufProdukte
+    public class VkPositionen
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }

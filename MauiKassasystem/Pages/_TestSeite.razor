@@ -7,21 +7,29 @@
     <p>@item.KategorieName</p>
 }*@
 
-@foreach (var item in poslist)
+@foreach (var item in vkList)
 {
     <p>Verkauf Nr.: @item.Id : @item.Datum.ToString("dd.MM.yyyy") - @item.VerkaufsId</p>
+}
+
+
+@foreach (var item in posList)
+{
+    <p>Verkauf Nr.: @item.Id : @item.ProduktId, @item.Anzahl Stk, @item.Einzelpreis. @item.Gesamtpreis</p>
 }
 
 
 
 @code {
     List<Kategorie> catList = new List<Kategorie>();
-    List<VerkaufProdukte> poslist = new List<VerkaufProdukte>();
+    List<VkPositionen> vkList = new List<VkPositionen>();
+    List<Verkauf> posList = new List<Verkauf>();
 
     protected override async Task OnInitializedAsync()
     {
         catList = await dbContext.AllCategoriesToListAsync();
-        poslist = await dbContext.AllSalesToListAsync();
+        vkList = await dbContext.AllSalesToListAsync();
+        posList = await dbContext.AllVkPositionsToListAsync();
     }
     
 }
