@@ -1,0 +1,27 @@
+.button-primary {
+    border: 3px solid var(--light);
+    border-radius: 10px;
+}
+
+.form-wrapper > button:nth-of-type(1) {
+    grid-column:2;
+}
+
+
+input {
+    font-size: 1.2rem;
+    border: none;
+    background-color: transparent;
+    border-bottom: 2px solid var(--dark);
+    width: 100%;
+}
+
+    input:focus {
+        border: none;
+        outline: none;
+        background-color: transparent;
+        border-bottom: 2px solid var(--secondary-color);
+        caret-color: var(--secondary-color);
+    }
+
+  

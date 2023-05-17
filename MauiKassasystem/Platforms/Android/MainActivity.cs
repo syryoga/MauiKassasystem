@@ -12,7 +12,8 @@ namespace MauiKassasystem;
     ConfigChanges.UiMode | 
     ConfigChanges.ScreenLayout | 
     ConfigChanges.SmallestScreenSize | 
-    ConfigChanges.Density)]
+    ConfigChanges.Density, 
+    ScreenOrientation = ScreenOrientation.Landscape)]
 public class MainActivity : MauiAppCompatActivity
 {
 }
