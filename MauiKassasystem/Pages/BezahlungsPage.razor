@@ -21,7 +21,7 @@
                 @foreach (var nominal in FakeDatabase.moneyList)
                 {
                     <div class="cent1 money-cell">
-                        <img src="@nominal.Picture.Bild" alt="@nominal.Picture.Name" @onclick="(()=>CountUp(nominal))" style="height:@(nominal.PictureHeight > 0.00? nominal.PictureHeight : 100)%">
+                        <img src="@nominal.ImageUrl" alt="@nominal.ImageUrl" @onclick="(()=>CountUp(nominal))" style="height:@(nominal.PictureHeight > 0.00? nominal.PictureHeight : 100)%">
                         <div class="money-minus-button dark-box @(nominal.Counter > 0 ? "":"hidden")" @onclick="(()=> CountDown(nominal))"></div>
                         <div class="money-quantity @(nominal.Counter > 0 ? "":"hidden")">@nominal.Counter</div>
                     </div>

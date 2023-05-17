@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//using Windows.Devices.AllJoyn;
 
 namespace MauiKassasystem.Datenbank
 {
@@ -21,7 +22,7 @@ namespace MauiKassasystem.Datenbank
 
         public DatabaseContext()
         {
-            this._dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Kassa007DB.db"); ;
+            this._dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "KassaTest2.db"); ;
         }
 
         private async Task InitDbAsync()
@@ -29,25 +30,34 @@ namespace MauiKassasystem.Datenbank
             // Wenn DB existiert mach geh raus und mach nix
             if (dbContext != null)
             {
+                // await CreateAllTablesNew();
                 return;
             }
+            else
+            {
+                // Andernfalls...
 
-            // Andernfalls...
+                // ...DB Instanzieren
+                dbContext = new SQLiteAsyncConnection(_dbPath);
 
-            // ...DB Instanzieren
-            dbContext = new SQLiteAsyncConnection(_dbPath);
+                // ...Tabellen erstellen
+                await dbContext.CreateTableAsync<Bilder>();
+                await dbContext.CreateTableAsync<Kategorie>();
+                await dbContext.CreateTableAsync<Money>();
+                await dbContext.CreateTableAsync<Produkt>();
+                await dbContext.CreateTableAsync<Verkauf>();
+                await dbContext.CreateTableAsync<VkPositionen>();
+                await dbContext.CreateTableAsync<Zugangsdaten>();
 
-            // ...Tabellen erstellen
-            await dbContext.CreateTableAsync<Bilder>();
-            await dbContext.CreateTableAsync<Kategorie>();
-            await dbContext.CreateTableAsync<Money>();
-            await dbContext.CreateTableAsync<Produkt>();
-            await dbContext.CreateTableAsync<Verkauf>();
-            await dbContext.CreateTableAsync<Zugangsdaten>();
+                // ...Standard-Kategorien und -Produkte erstellen
+                await CreateDefaultCategoriesAsync();
+                await CreateDefaultProductsAsync();
 
-            // ...Standard-Kategorien und -Produkte erstellen
-            await CreateDefaultCategoriesAsync();
-            await CreateDefaultProductsAsync();
+
+                await CreateFakeSaleAsync();
+            }
+
+  
 
         }
 
@@ -110,7 +120,14 @@ namespace MauiKassasystem.Datenbank
 
         #region Verkäufe (Sales)
         // alle verkauften Produkte
-        public async Task CreateSaleAsync(Verkauf v)
+
+        public async Task SavePosAsync(VkPositionen p)
+        {
+            await InitDbAsync();
+            await dbContext.InsertAsync(p);
+        }
+
+        public async Task SaveSaleAsync(Verkauf v)
         {
             await InitDbAsync();
             await dbContext.InsertAsync(v);
@@ -120,7 +137,13 @@ namespace MauiKassasystem.Datenbank
             await InitDbAsync();
             await dbContext.DeleteAsync(v);
         }
-        public async Task<List<Verkauf>> AllSalesToListAsync()
+        public async Task<List<VkPositionen>> AllSalesToListAsync()
+        {
+            await InitDbAsync();
+            return await dbContext.Table<VkPositionen>().ToListAsync();
+        }
+
+        public async Task<List<Verkauf>> AllVkPositionsToListAsync()
         {
             await InitDbAsync();
             return await dbContext.Table<Verkauf>().ToListAsync();
@@ -178,5 +201,42 @@ namespace MauiKassasystem.Datenbank
         }
 
         #endregion
+
+
+        #region Fake-Sales 
+
+        private async Task CreateFakeSaleAsync()
+        {
+            Verkauf vk1= new Verkauf { ProduktId=1, Anzahl=2, Einzelpreis=4, Gesamtpreis=8};
+
+            await dbContext.InsertAsync(vk1);
+
+            VkPositionen vkp1 = new VkPositionen { Datum = DateTime.Now, VerkaufsId = 1 };
+
+            await dbContext.InsertAsync(vkp1);
+
+        }
+        #endregion
+
+
+        private async Task CreateAllTablesNew()
+        {
+            await dbContext.DropTableAsync<Bilder>();
+            await dbContext.DropTableAsync<Kategorie>();
+            await dbContext.DropTableAsync<Money>();
+            await dbContext.DropTableAsync<Produkt>();
+            await dbContext.DropTableAsync<Verkauf>();
+            await dbContext.DropTableAsync<VkPositionen>();
+            await dbContext.DropTableAsync<Zugangsdaten>();
+
+            await dbContext.CreateTableAsync<Bilder>();
+            await dbContext.CreateTableAsync<Kategorie>();
+            await dbContext.CreateTableAsync<Money>();
+            await dbContext.CreateTableAsync<Produkt>();
+            await dbContext.CreateTableAsync<Verkauf>();
+            await dbContext.CreateTableAsync<VkPositionen>();
+            await dbContext.CreateTableAsync<Zugangsdaten>();
+
+        }
     }
 }

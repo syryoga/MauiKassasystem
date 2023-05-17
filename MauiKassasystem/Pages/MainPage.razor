@@ -1,5 +1,5 @@
 ﻿@page "/"
-@using MauiKassasystem.Datenbank
+
 <div class="wrapper">
     <div class="topbar">
         <div class="logo-wrapper">
@@ -12,9 +12,10 @@
                     Icon="icon-clipboard"
                     Name="TAGESABSCHLUSS" />
 
-            <Button Href=""
+            <Button 
                     Icon="icon-bin"
-                    Name="STORNO" />
+                    Name="STORNO"
+                    OnClickAction="ShowPopup"/>
 
             <Button Href="/login-admin"
                     Icon="icon-user"
@@ -100,11 +101,24 @@
                         Icon="icon-checkmark"
                         Name="ABSCHLUSS"
                         IsDisabled=@(FakeDatabase.summ == 0)
-                        OnClickAction="FakeDatabase.Cancel"
-                         />
+                        OnClickAction="FakeDatabase.Cancel" />
             </div>
         </div>
     </div>
+
+    <!-- Popup-Fenster -->
+    @if (showPopup)
+    {
+        <div class="popup-container">
+            <div class="popup-content">
+                <h4>Achtung!!!</h4>
+                <p>Wollen Sie wirklich stornieren?</p>
+                <button class="m-button button-primary">Stornieren</button>  @*@onclick="HandleStorno" *@
+                <button class="m-button button-primary" @onclick="ClosePopup">Abbrechen</button>
+            </div>
+        </div>
+    }
+
 
 </div>
 
@@ -116,6 +130,45 @@
 
     private int curentCategory = 0;
 
+    //Popup start
+    bool showPopup = false;
+
+    void ShowPopup()
+    {
+        showPopup = true;
+    }
+
+    void ClosePopup()
+    {
+        showPopup = false;
+    }
+    //Popup end
+
+    // Property für die Popup-Steuerung
+    bool IsConfirmationPopupOpen { get; set; }
+
+    // Methode zum Öffnen des Popups
+    void ShowConfirmationPopup()
+    {
+        IsConfirmationPopupOpen = true;
+    }
+
+    // Methode zum Schließen des Popups
+    void CloseConfirmationPopup()
+    {
+        IsConfirmationPopupOpen = false;
+    }
+
+    // Methode zum Behandeln der Storno-Aktion
+    void HandleStorno()
+    {
+        // Fügen Sie hier den Code ein, der bei Storno ausgeführt werden soll
+        CloseConfirmationPopup();
+    }
 }
+
+
+
+
 
 

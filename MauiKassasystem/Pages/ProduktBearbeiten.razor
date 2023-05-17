@@ -1,5 +1,5 @@
 ﻿@page "/produkt-bearbeiten"
-@inject NavigationManager navman
+@*@page "/produkt-bearbeiten/{id}"*@
 @inject DatabaseContext dbContext;
 
 <div class="admin-wrapper">
@@ -42,5 +42,11 @@
 </div>
 
 @code {
+    List<Produkt> products = new List<Produkt>();
+
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    //products = await dbContext.GetProductByIdAsync();
+    //}
 
 }

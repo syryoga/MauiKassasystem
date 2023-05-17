@@ -1,0 +1,35 @@
+﻿@page "/test-page"
+@inject NavigationManager navman
+@inject DatabaseContext dbContext
+
+@*@foreach (var item in catList)
+{
+    <p>@item.KategorieName</p>
+}*@
+
+@foreach (var item in vkList)
+{
+    <p>Verkauf Nr.: @item.Id : @item.Datum.ToString("dd.MM.yyyy") - @item.VerkaufsId</p>
+}
+
+
+@foreach (var item in posList)
+{
+    <p>Verkauf Nr.: @item.Id : @item.ProduktId, @item.Anzahl Stk, @item.Einzelpreis. @item.Gesamtpreis</p>
+}
+
+
+
+@code {
+    List<Kategorie> catList = new List<Kategorie>();
+    List<VkPositionen> vkList = new List<VkPositionen>();
+    List<Verkauf> posList = new List<Verkauf>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        catList = await dbContext.AllCategoriesToListAsync();
+        vkList = await dbContext.AllSalesToListAsync();
+        posList = await dbContext.AllVkPositionsToListAsync();
+    }
+    
+}
