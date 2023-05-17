@@ -23,10 +23,11 @@
                 @if (!IsResettingPassword)
                 {
                     <h2>Passwort:</h2>
-                    <input type="password" @bind-value="@Password" placeholder="Passwort"/>
+                    <input type="password" @bind="@Password" placeholder="Passwort"/>
                     <br />
-                    <button class="m-button button-primary" @onclick="ShowPopup">Passwort zurücksetzen</button>
-                    <button class="m-button button-primary" @onclick="Login">Anmelden</button>
+                    <button class="m-button button-primary" @onclick="ShowPopup" >Passwort zurücksetzen</button>
+                    //2do
+                    <button class="m-button button-primary" @onclick="Login" @onkeydown="HandleKeyDown">Anmelden</button>
                     <br />
 
                     //PopUp start
@@ -98,8 +99,14 @@
     }
     //Popup end
 
-
-
+    //2do
+    private void HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            Login();
+        }
+    }
 
 
     static public string Password = "";

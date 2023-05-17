@@ -14,9 +14,6 @@
     padding: 0;
 }
 
-body{
-    min-width:1126px;
-}
 /*ScrollBar hidden*/
 ::-webkit-scrollbar {
     width: 0;
