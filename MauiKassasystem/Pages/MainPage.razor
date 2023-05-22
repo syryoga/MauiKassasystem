@@ -1,4 +1,5 @@
 ﻿@page "/"
+@inject DatabaseContext dbContext
 
 <div class="wrapper">
     <div class="topbar">
@@ -30,13 +31,15 @@
                 <div>Produkt</div>
                 <div>Bestellung</div>
             </div>
+            
             <div class="light-box kategorie-box">
-                @if (FakeDatabase.categorieList != null && FakeDatabase.categorieList.Count > 0)
+                @if (kategories != null)
                 {
                     <div class="kategorie-wrapper">
-                        @foreach (var kategorie in FakeDatabase.categorieList)
+                        @foreach (var kategorie in kategories)
                         {
                             <div class="kategorie" @onclick="() => ShowId(kategorie.Id)">
+                                
                                 <img src="@kategorie.KategorieBild">
                                 <div>@kategorie.KategorieName</div>
                             </div>
@@ -49,18 +52,18 @@
                 @if (curentCategory > 0)
                 {
                     <div class="produkt-wrapper">
-                        @foreach (var product in FakeDatabase.productList)
+                       @* @foreach (var product in alleProducts.Result)
                         {
                             if (product.KategorieId == curentCategory)
                             {
-                                <div class="produkt" @onclick="()=>FakeDatabase.AddProduktToOrderList(product)">
+                                <div class="produkt" @onclick="()=>AddPRoduktToOrderList(product)">
                                     <img src="@product.ProduktBild">
                                     <div class="produkt-name">@product.ProduktName</div>
                                     <div class="produkt-preis">€ @product.ProduktPreis</div>
                                 </div>
                             }
 
-                        }
+                        }*@
                     </div>
                 }
 
@@ -123,6 +126,14 @@
 </div>
 
 @code {
+    List<Kategorie> kategories = new List<Kategorie>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await dbContext.AllProductsToListAsync();
+        kategories = await dbContext.AllCategoriesToListAsync();
+    }
+
     private void ShowId(int id)
     {
         curentCategory = id;
@@ -165,6 +176,21 @@
         // Fügen Sie hier den Code ein, der bei Storno ausgeführt werden soll
         CloseConfirmationPopup();
     }
+
+    //public async Task AddPRoduktToOrderList(Produkt produkt)
+    //{
+    //    public Dictionary<Produkt, int> orderList = new Dictionary<Produkt, int>();
+
+    //    if (!orderList.ContainsKey(produkt))
+    //    {
+    //        orderList.Add(produkt, 1);
+    //    }
+    //    else
+    //    {
+    //        orderList[produkt] += 1;
+    //    }
+    //    //TotalPriceCalculation();
+    //}
 }
 
 

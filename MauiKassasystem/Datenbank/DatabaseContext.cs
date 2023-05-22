@@ -160,13 +160,13 @@ namespace MauiKassasystem.Datenbank
 
         private async Task CreateDefaultCategoriesAsync()
         {
-            Kategorie kategorieWarm = new Kategorie { KategorieName = "Warm", KategorieBild = "kat_warm_75" };
+            Kategorie kategorieWarm = new Kategorie { KategorieName = "Warm", KategorieBild = "drawable/kat_warm.png" };
             await dbContext.InsertAsync(kategorieWarm);
-            Kategorie kategorieKalt = new Kategorie { KategorieName = "Kalt", KategorieBild = "kat_kalt_75" };
+            Kategorie kategorieKalt = new Kategorie { KategorieName = "Kalt", KategorieBild = "drawable/kat_kalt.png" };
             await dbContext.InsertAsync(kategorieKalt);
-            Kategorie kategorieSnack = new Kategorie { KategorieName = "Snack", KategorieBild = "kat_snack_75" };
+            Kategorie kategorieSnack = new Kategorie { KategorieName = "Snack", KategorieBild = "drawable/kat_snack.png" };
             await dbContext.InsertAsync(kategorieSnack);
-            Kategorie kategorieSonstiges = new Kategorie { KategorieName = "Sonstiges", KategorieBild = "kat_sonst_75" };
+            Kategorie kategorieSonstiges = new Kategorie { KategorieName = "Sonstiges", KategorieBild = "drawable/kat_sonst.png" };
             await dbContext.InsertAsync(kategorieSonstiges);
         }
 
@@ -244,5 +244,7 @@ namespace MauiKassasystem.Datenbank
             await dbContext.CreateTableAsync<Zugangsdaten>();
 
         }
+
+        
     }
 }
