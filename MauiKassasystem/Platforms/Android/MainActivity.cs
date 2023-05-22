@@ -1,6 +1,12 @@
 ﻿using Android.App;
 using Android.Content.PM;
+using Android.Content.Res;
 using Android.OS;
+using Google.Android.Material.BottomNavigation;
+//using Android.Support.Design.Widget;
+using Android.Widget;
+using Microsoft.Maui;
+using Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;
 
 namespace MauiKassasystem;
 
@@ -16,4 +22,5 @@ namespace MauiKassasystem;
     ScreenOrientation = ScreenOrientation.Landscape)]
 public class MainActivity : MauiAppCompatActivity
 {
+    
 }

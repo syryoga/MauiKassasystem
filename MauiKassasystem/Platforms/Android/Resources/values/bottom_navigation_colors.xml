@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+	<color name="bottom_nav_background">#0F2B48</color>
+	<!-- здесь замените FF0000 на желаемый цвет фона -->
+	<color name="bottom_nav_selected">#00FF00</color>
+	<!-- здесь замените 00FF00 на желаемый цвет выделения -->
+</resources>
