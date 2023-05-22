@@ -1,0 +1,31 @@
+﻿
+.dark-box {
+    width: 50%;
+    height: 300px;
+    margin: 0 auto;
+    margin-top:10%;
+}
+
+.admin-form-box{
+}
+
+.tagesabschluss {
+    font-size: x-large;
+}
+
+.exportList {
+    display: inline-flex;
+    font-size: x-large;
+    text-align: left;
+}
+.ausgabe {
+    display: inline-flex;
+    background-color: white;
+    color: black;
+    width: fit-content;
+    min-width:100px;
+    height: 40px;
+}
+.admin-form-btn {
+    float: left;
+}
