@@ -20,11 +20,6 @@ namespace MauiKassasystem.Datenbank
             _dbPath = dbPath;
         }
 
-        public DatabaseContext()
-        {
-            this._dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "KassaTest2.db"); ;
-        }
-
         private async Task InitDbAsync()
         {
             // Wenn DB existiert mach geh raus und mach nix
@@ -39,6 +34,17 @@ namespace MauiKassasystem.Datenbank
 
                 // ...DB Instanzieren
                 dbContext = new SQLiteAsyncConnection(_dbPath);
+
+
+                // START: Prüfe ob die DB erzeugt wurde
+                var checkDB = await dbContext.GetTableInfoAsync(
+                    "Bilder");
+
+                if (checkDB.Count > 0) {
+                    return;
+                }
+
+                // END
 
                 // ...Tabellen erstellen
                 await dbContext.CreateTableAsync<Bilder>();

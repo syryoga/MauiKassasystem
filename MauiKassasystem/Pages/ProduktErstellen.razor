@@ -29,34 +29,37 @@
 
                 <p>
                     <label>Kategorie wählen:</label>
-                    <select name="Kategorie" required>
-                        <option value="" disabled selected hidden>Kategorie</option>
-                        <option value="Warm">Warm</option>
-                        <option value="Kalt">Kalt</option>
-                        <option value="Snack">Snack</option>
-                        <option value="Sonstiges">Sonstiges</option>
+                    <select name="Kategorie" required @bind="product.KategorieId">
+
+                        @foreach (var item in kategorie)
+                        {
+                            <option value="@item.Id">@item.KategorieName</option>
+
+                        }
                     </select>
                 </p>
                 <p>
                     <label>Produktnamen eingeben:</label>
-                    <input type="text" name="Produktname" placeholder="Name" />
+                    <input type="text" name="Produktname" @bind-value="product.ProduktName" placeholder="Name" />
                 </p>
                 <p>
                     <label>Bild auswählen:</label>
-                    <select name="Produktbild" required>
-                        <option value="" disabled selected hidden>Bild wählen</option>
-                        <option value="Warm">Bild 1</option>
-                        <option value="Kalt">Icon 2</option>
-                        <option value="Snack">Bild 3</option>
-                        <option value="Sonstiges">Icon 4</option>
+                    <select name="Produktbild" required @bind="product.ProduktBild">
+
+                     @foreach (var item in kategorie)
+                        {
+                            <option value="@item.KategorieBild">@item.KategorieName</option>
+
+                        }
                     </select>
                 </p>
                 <p>
                     <label>Preis eingeben:</label>
-                    <input type="text" name="Produktpreis" placeholder="Preis" /> &euro;
+                    <input type="text" name="Produktpreis" @bind-value="product.ProduktPreis" placeholder="Preis" /> &euro;
                 </p>
                 <p class="right-align">
-                    <input type="submit" class="admin-form-btn" value="ERSTELLEN" />&nbsp;<input type="reset" class="admin-form-btn" value="ABBRECHEN" />
+                    
+                    <input type="submit" class="admin-form-btn" value="ERSTELLEN" @onclick="CreateNewProduct" />&nbsp;<input type="reset" class="admin-form-btn" value="ABBRECHEN" />
                 </p>
             </form>
         </div>
@@ -66,9 +69,16 @@
 
 @code {
     Produkt product = new Produkt();
+    List<Kategorie> kategorie = new List<Kategorie>();
 
     protected async Task CreateNewProduct()
     {
         await dbContext.CreateProductAsync(product);
     }
+    protected override async Task OnInitializedAsync()
+    {
+        await dbContext.AllProductsToListAsync();
+        kategorie = await dbContext.AllCategoriesToListAsync();
+    }
+
 }
