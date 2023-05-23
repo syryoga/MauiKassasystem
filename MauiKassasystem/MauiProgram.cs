@@ -22,7 +22,7 @@ public static class MauiProgram
 		builder.Services.AddBlazorWebViewDeveloperTools();
 #endif
 
-        var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Kassa007DBv8.1.db");
+        var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Kassa007DBv9.2.db");
         builder.Services.AddSingleton<DatabaseContext>(s => ActivatorUtilities.CreateInstance<DatabaseContext>(s, dbPath));
 		
 

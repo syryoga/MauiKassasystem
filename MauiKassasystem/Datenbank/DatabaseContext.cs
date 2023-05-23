@@ -1,4 +1,4 @@
-﻿using Com.Ajts.Androidmads.Sqliteimpex;
+﻿
 using MauiKassasystem.Model;
 
 using SQLite;
@@ -175,37 +175,37 @@ namespace MauiKassasystem.Datenbank
 
         private async Task CreateDefaultProductsAsync()
         {
-            Produkt smoothie = new Produkt { KategorieId = 2, ProduktName = "Smoothie", ProduktBild = "kalt_smoothie", ProduktPreis = 1.0m };
+            Produkt smoothie = new Produkt { KategorieId = 2, ProduktName = "Smoothie", ProduktBild = "drawable/kalt_smoothie.png", ProduktPreis = 1.0m };
             await dbContext.InsertAsync(smoothie);
-            Produkt espresso = new Produkt { KategorieId = 1, ProduktName = "Espresso", ProduktBild = "warm_kaffee", ProduktPreis = 0.3m };
+            Produkt espresso = new Produkt { KategorieId = 1, ProduktName = "Espresso", ProduktBild = "drawable/warm_kaffee.png", ProduktPreis = 0.3m };
             await dbContext.InsertAsync(espresso);
-            Produkt cappuccino = new Produkt { KategorieId = 1, ProduktName = "Cappuccino", ProduktBild = "warm_kaffee", ProduktPreis = 0.5m };
+            Produkt cappuccino = new Produkt { KategorieId = 1, ProduktName = "Cappuccino", ProduktBild = "drawable/warm_kaffee.png", ProduktPreis = 0.5m };
             await dbContext.InsertAsync(cappuccino);
-            Produkt caffeLatte = new Produkt { KategorieId = 1, ProduktName = "Caffe Latte", ProduktBild = "warm_kaffee", ProduktPreis = 0.5m };
+            Produkt caffeLatte = new Produkt { KategorieId = 1, ProduktName = "Caffe Latte", ProduktBild = "drawable/warm_kaffee.png", ProduktPreis = 0.5m };
             await dbContext.InsertAsync(caffeLatte);
-            Produkt kleinerBrauner = new Produkt { KategorieId = 1, ProduktName = "Kleiner Brauner", ProduktBild = "warm_kaffee", ProduktPreis = 0.5m };
+            Produkt kleinerBrauner = new Produkt { KategorieId = 1, ProduktName = "Kleiner Brauner", ProduktBild = "drawable/warm_kaffee.png", ProduktPreis = 0.5m };
             await dbContext.InsertAsync(kleinerBrauner);
-            Produkt grosserBrauner = new Produkt { KategorieId = 1, ProduktName = "Großer Brauner", ProduktBild = "warm_kaffee", ProduktPreis = 0.8m };
+            Produkt grosserBrauner = new Produkt { KategorieId = 1, ProduktName = "Großer Brauner", ProduktBild = "drawable/warm_kaffee.png", ProduktPreis = 0.8m };
             await dbContext.InsertAsync(grosserBrauner);
-            Produkt tee = new Produkt { KategorieId = 1, ProduktName = "Tee", ProduktBild = "warm_tee", ProduktPreis = 0.3m };
+            Produkt tee = new Produkt { KategorieId = 1, ProduktName = "Tee", ProduktBild = "drawable/warm_tee.png", ProduktPreis = 0.3m };
             await dbContext.InsertAsync(tee);
-            Produkt frischerSaft = new Produkt { KategorieId = 2, ProduktName = "frischer Saft", ProduktBild = "kalt_saft", ProduktPreis = 1.0m };
+            Produkt frischerSaft = new Produkt { KategorieId = 2, ProduktName = "frischer Saft", ProduktBild = "drawable/kalt_saft.png", ProduktPreis = 1.0m };
             await dbContext.InsertAsync(frischerSaft);
-            Produkt shake = new Produkt { KategorieId = 2, ProduktName = "Shake", ProduktBild = "kalt_shake", ProduktPreis = 1.0m };
+            Produkt shake = new Produkt { KategorieId = 2, ProduktName = "Shake", ProduktBild = "drawable/kalt_shake.png", ProduktPreis = 1.0m };
             await dbContext.InsertAsync(shake);
-            Produkt infusedWater = new Produkt { KategorieId = 2, ProduktName = "Infused Water", ProduktBild = "kalt_infused", ProduktPreis = 0.5m };
+            Produkt infusedWater = new Produkt { KategorieId = 2, ProduktName = "Infused Water", ProduktBild = "drawable/kalt_infused.png", ProduktPreis = 0.5m };
             await dbContext.InsertAsync(infusedWater);
-            Produkt apfel = new Produkt { KategorieId = 3, ProduktName = "Apfel", ProduktBild = "snack_obst", ProduktPreis = 0.5m };
+            Produkt apfel = new Produkt { KategorieId = 3, ProduktName = "Apfel", ProduktBild = "drawable/snack_obst.png", ProduktPreis = 0.5m };
             await dbContext.InsertAsync(apfel);
-            Produkt birne = new Produkt { KategorieId = 3, ProduktName = "Birne", ProduktBild = "snack_obst", ProduktPreis = 0.5m };
+            Produkt birne = new Produkt { KategorieId = 3, ProduktName = "Birne", ProduktBild = "drawable/snack_obst.png", ProduktPreis = 0.5m };
             await dbContext.InsertAsync(birne);
-            Produkt banane = new Produkt { KategorieId = 3, ProduktName = "Banane", ProduktBild = "snack_obst", ProduktPreis = 0.5m };
+            Produkt banane = new Produkt { KategorieId = 3, ProduktName = "Banane", ProduktBild = "drawable/snack_obst.png", ProduktPreis = 0.5m };
             await dbContext.InsertAsync(banane);
-            Produkt mannerschnitte = new Produkt { KategorieId = 3, ProduktName = "Mannerschnitten", ProduktBild = "snack_schoko", ProduktPreis = 1.0m };
+            Produkt mannerschnitte = new Produkt { KategorieId = 3, ProduktName = "Mannerschnitten", ProduktBild = "drawable/snack_schoko.png", ProduktPreis = 1.0m };
             await dbContext.InsertAsync(mannerschnitte);
-            Produkt kaugummi = new Produkt { KategorieId = 3, ProduktName = "Kaugummi", ProduktBild = "kat_snack", ProduktPreis = 1.0m };
+            Produkt kaugummi = new Produkt { KategorieId = 3, ProduktName = "Kaugummi", ProduktBild = "drawable/kat_snack.png", ProduktPreis = 1.0m };
             await dbContext.InsertAsync(kaugummi);
-            Produkt nussini = new Produkt { KategorieId = 3, ProduktName = "Nussini", ProduktBild = "snack_schoko", ProduktPreis = 1.0m };
+            Produkt nussini = new Produkt { KategorieId = 3, ProduktName = "Nussini", ProduktBild = "drawable/snack_schoko.png", ProduktPreis = 1.0m };
             await dbContext.InsertAsync(nussini);
         }
 
