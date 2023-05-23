@@ -1,10 +1,7 @@
-﻿using MauiKassasystem.Model;
+﻿using Com.Ajts.Androidmads.Sqliteimpex;
+using MauiKassasystem.Model;
+
 using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 //using Windows.Devices.AllJoyn;
 
 namespace MauiKassasystem.Datenbank
@@ -20,11 +17,14 @@ namespace MauiKassasystem.Datenbank
             _dbPath = dbPath;
         }
 
+        
+
         private async Task InitDbAsync()
         {
             // Wenn DB existiert mach geh raus und mach nix
             if (dbContext != null)
             {
+                
                 // await CreateAllTablesNew();
                 return;
             }
@@ -40,7 +40,8 @@ namespace MauiKassasystem.Datenbank
                 var checkDB = await dbContext.GetTableInfoAsync(
                     "Bilder");
 
-                if (checkDB.Count > 0) {
+                if (checkDB.Count > 0)
+                {
                     return;
                 }
 
@@ -63,7 +64,7 @@ namespace MauiKassasystem.Datenbank
                 await CreateFakeSaleAsync();
             }
 
-  
+
 
         }
 
@@ -99,8 +100,10 @@ namespace MauiKassasystem.Datenbank
         #region Produkte
         public async Task CreateProductAsync(Produkt p)
         {
-            await InitDbAsync();
-            await dbContext.InsertAsync(p);
+            SQLiteAsyncConnection conn = new(_dbPath);
+            await conn.InsertAsync(new Produkt() {Id =p.Id, KategorieId = p.KategorieId, ProduktName = p.ProduktName, ProduktBild = p.ProduktBild, ProduktPreis = p.ProduktPreis, IstAktivProdukt = true });
+            
+
         }
         public async Task UpdateProductAsync(Produkt p)
         {
@@ -213,7 +216,7 @@ namespace MauiKassasystem.Datenbank
 
         private async Task CreateFakeSaleAsync()
         {
-            Verkauf vk1= new Verkauf { ProduktId=1, Anzahl=2, Einzelpreis=4, Gesamtpreis=8};
+            Verkauf vk1 = new Verkauf { ProduktId = 1, Anzahl = 2, Einzelpreis = 4, Gesamtpreis = 8 };
 
             await dbContext.InsertAsync(vk1);
 
@@ -245,6 +248,6 @@ namespace MauiKassasystem.Datenbank
 
         }
 
-        
+
     }
 }

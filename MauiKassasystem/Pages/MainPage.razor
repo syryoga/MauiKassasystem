@@ -52,18 +52,18 @@
                 @if (curentCategory > 0)
                 {
                     <div class="produkt-wrapper">
-                       @* @foreach (var product in alleProducts.Result)
+                        @foreach (var product in products)
                         {
                             if (product.KategorieId == curentCategory)
                             {
-                                <div class="produkt" @onclick="()=>AddPRoduktToOrderList(product)">
+                                <div class="produkt" @onclick="()=>AddProduktToOrderList(product)">
                                     <img src="@product.ProduktBild">
                                     <div class="produkt-name">@product.ProduktName</div>
-                                    <div class="produkt-preis">€ @product.ProduktPreis</div>
+                                    <div class="produkt-preis">€ @product.ProduktPreis.ToString("0.00")</div>
                                 </div>
                             }
 
-                        }*@
+                        }
                     </div>
                 }
 
@@ -73,16 +73,17 @@
                 <div class="dark-box">
 
 
-                    @if (FakeDatabase.orderList.Count > 0)
+                    @if (orderList.Count > 0)
                     {
-                        @foreach (var product in FakeDatabase.orderList)
+                        @foreach (var product in orderList)
                         {
+	                        
                             <div class="order-line">
                                 <span>@product.Value.ToString()x</span>
                                 <span>@product.Key.ProduktName</span>
                                 <span>€ @(product.Key.ProduktPreis * product.Value)</span>
-                                <div class="minus-button" style="cursor:pointer" @onclick="()=>FakeDatabase.RemoveProduct(product.Key)">-</div>
-                                <div class="add-button" style="cursor:pointer" @onclick="()=>FakeDatabase.AddProduktToOrderList(product.Key)">+</div>
+                                <div class="minus-button" style="cursor:pointer" @onclick="()=>RemoveProduct(product.Key)">-</div>
+                                <div class="add-button" style="cursor:pointer" @onclick="()=>AddProduktToOrderList(product.Key)">+</div>
                             </div>
                         }
                     }
@@ -90,20 +91,20 @@
                 </div>
                 <div class="summ">
                     <span class="text">Summe:</span>
-                    <span class="to-pay">€ @FakeDatabase.summ.ToString("0.00")</span>
+                    <span class="to-pay">€ @summ.ToString("0.00")</span>
                 </div>
             </div>
             <div class="buttons-box light-box">
 
-                <Button Href="/bezahlungs-page"
-                        Icon="icon-coin-euro"
-                        Name="WECHSELGELD"
-                        IsDisabled=@(FakeDatabase.summ == 0) />
+	            <Button Href="/bezahlungs-page"
+	                    Icon="icon-coin-euro"
+	                    Name="WECHSELGELD"
+	                    IsDisabled=@(summ == 0) />
 
-                <Button Href="/abschluss-page"
+	            <Button Href="/abschluss-page"
                         Icon="icon-checkmark"
                         Name="ABSCHLUSS"
-                        IsDisabled=@(FakeDatabase.summ == 0)
+                        IsDisabled=@(summ == 0)
                         OnClickAction="FakeDatabase.Cancel" />
             </div>
         </div>
@@ -126,13 +127,60 @@
 </div>
 
 @code {
+
+
+
+	public static decimal summ = 0.00m;
+
     List<Kategorie> kategories = new List<Kategorie>();
+	List<Produkt> products = new List<Produkt>();
+	List<Verkauf> sales = new List<Verkauf>();
+	static public Dictionary<Produkt, int> orderList = new Dictionary<Produkt, int>();
+
 
     protected override async Task OnInitializedAsync()
     {
-        await dbContext.AllProductsToListAsync();
+        products = await dbContext.AllProductsToListAsync();
         kategories = await dbContext.AllCategoriesToListAsync();
+        sales = await dbContext.AllVkPositionsToListAsync();
     }
+
+	public static void AddProduktToOrderList(Produkt produkt)
+	{
+		if (!orderList.ContainsKey(produkt))
+		{
+			orderList.Add(produkt, 1);
+		}
+		else
+		{
+			orderList[produkt] += 1;
+		}
+        TotalPriceCalculation();
+	}
+	public static void RemoveProduct(Produkt produkt)
+	{
+		orderList[produkt] -= 1;
+
+		if (orderList[produkt] < 1)
+		{
+			orderList.Remove(produkt);
+		}
+        TotalPriceCalculation();
+	}
+
+	
+
+	public static void TotalPriceCalculation()
+	{
+		decimal price = 0;
+
+		foreach (var product in orderList)
+		{
+			price += product.Value * product.Key.ProduktPreis;
+		}
+
+		summ = price;
+	}
 
     private void ShowId(int id)
     {

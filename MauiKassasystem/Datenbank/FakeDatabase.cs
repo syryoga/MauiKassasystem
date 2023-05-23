@@ -1,4 +1,4 @@
-﻿using MauiKassasystem.Model;
+﻿ using MauiKassasystem.Model;
 using MauiKassasystem.Pages;
 using System;
 using System.Collections.Generic;
@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace MauiKassasystem.Datenbank
 {
+    
     public static class FakeDatabase
     {
         static public string Password = "";

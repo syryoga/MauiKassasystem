@@ -29,7 +29,7 @@
 
                 <p>
                     <label>Kategorie wählen:</label>
-                    <select name="Kategorie" required @bind="product.KategorieId">
+                    <select name="KategorieId" required @bind="product.KategorieId">
 
                         @foreach (var item in kategorie)
                         {
@@ -44,7 +44,7 @@
                 </p>
                 <p>
                     <label>Bild auswählen:</label>
-                    <select name="Produktbild" required @bind="product.ProduktBild">
+                    <select name="ProduktBild" required @bind="product.ProduktBild">
 
                      @foreach (var item in kategorie)
                         {
@@ -55,7 +55,7 @@
                 </p>
                 <p>
                     <label>Preis eingeben:</label>
-                    <input type="text" name="Produktpreis" @bind-value="product.ProduktPreis" placeholder="Preis" /> &euro;
+                    <input type="text" name="ProduktPreis" @bind-value="product.ProduktPreis" placeholder="Preis" /> &euro;
                 </p>
                 <p class="right-align">
                     
