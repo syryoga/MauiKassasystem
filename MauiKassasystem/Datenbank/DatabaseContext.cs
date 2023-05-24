@@ -8,7 +8,7 @@ namespace MauiKassasystem.Datenbank
 {
     public class DatabaseContext
     {
-        string _dbPath;
+        private readonly string _dbPath;
 
         private SQLiteAsyncConnection dbContext;
 
@@ -16,8 +16,6 @@ namespace MauiKassasystem.Datenbank
         {
             _dbPath = dbPath;
         }
-
-
 
         private async Task InitDbAsync()
         {
