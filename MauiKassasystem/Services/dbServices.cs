@@ -19,14 +19,14 @@ namespace MauiKassasystem.Services
         public string Password = "";
         public bool IsAuthenticated = false;
 
-        public decimal recivedMoney = 0;
-        public decimal summ = 0.00m;
+        public static decimal recivedMoney = 0;
+        public static decimal summ = 0.00m;
 
-        public Dictionary<Produkt, int> orderList = new Dictionary<Produkt, int>();
+        public static Dictionary<Produkt, int> orderList = new Dictionary<Produkt, int>();
+
 
         
 
-        
 
     }
 }

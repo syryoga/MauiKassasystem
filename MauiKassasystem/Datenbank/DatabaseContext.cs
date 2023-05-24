@@ -29,8 +29,7 @@ namespace MauiKassasystem.Datenbank
             else
             {
 
-                try
-                {
+                
 
                     //var fs = File.Create(Path.Combine(FileSystem.AppDataDirectory, "mptest.db3"));
                     //fs.Write(new byte[0]);
@@ -70,11 +69,7 @@ namespace MauiKassasystem.Datenbank
 
 
                     await CreateFakeSaleAsync();
-                }
-                catch(Exception e)
-                {
-                    int x = 0;
-                }
+               
             }
 
 

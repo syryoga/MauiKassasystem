@@ -1,5 +1,6 @@
 ﻿@page "/"
 @inject DatabaseContext dbContext
+@using Services ser
 
 <div class="wrapper">
     <div class="topbar">
@@ -73,9 +74,9 @@
                 <div class="dark-box">
 
 
-                    @if (orderList.Count > 0)
+                    @if (dbServices.orderList.Count > 0)
                     {
-                        @foreach (var product in orderList)
+                        @foreach (var product in dbServices.orderList)
                         {
 	                        
                             <div class="order-line">
@@ -91,7 +92,7 @@
                 </div>
                 <div class="summ">
                     <span class="text">Summe:</span>
-                    <span class="to-pay">€ @summ.ToString("0.00")</span>
+                    <span class="to-pay">€ @dbServices.summ.ToString("0.00")</span>
                 </div>
             </div>
             <div class="buttons-box light-box">
@@ -99,13 +100,13 @@
 	            <Button Href="/bezahlungs-page"
 	                    Icon="icon-coin-euro"
 	                    Name="WECHSELGELD"
-	                    IsDisabled=@(summ == 0) />
+                        IsDisabled=@(dbServices.summ == 0) />
 
 	            <Button Href="/abschluss-page"
                         Icon="icon-checkmark"
                         Name="ABSCHLUSS"
-                        IsDisabled=@(summ == 0)
-                        OnClickAction="FakeDatabase.Cancel" />
+                        IsDisabled=@(dbServices.summ == 0)
+                        OnClickAction="() => moneyServices.Cancel()" />
             </div>
         </div>
     </div>
@@ -130,12 +131,10 @@
 
 
 
-	public static decimal summ = 0.00m;
 
     List<Kategorie> kategories = new List<Kategorie>();
 	List<Produkt> products = new List<Produkt>();
 	List<Verkauf> sales = new List<Verkauf>();
-	static public Dictionary<Produkt, int> orderList = new Dictionary<Produkt, int>();
 
 
     protected override async Task OnInitializedAsync()
@@ -147,23 +146,23 @@
 
 	public static void AddProduktToOrderList(Produkt produkt)
 	{
-		if (!orderList.ContainsKey(produkt))
+        if (!dbServices.orderList.ContainsKey(produkt))
 		{
-			orderList.Add(produkt, 1);
+            dbServices.orderList.Add(produkt, 1);
 		}
 		else
 		{
-			orderList[produkt] += 1;
+            dbServices.orderList[produkt] += 1;
 		}
         TotalPriceCalculation();
 	}
 	public static void RemoveProduct(Produkt produkt)
 	{
-		orderList[produkt] -= 1;
+        dbServices.orderList[produkt] -= 1;
 
-		if (orderList[produkt] < 1)
+        if (dbServices.orderList[produkt] < 1)
 		{
-			orderList.Remove(produkt);
+            dbServices.orderList.Remove(produkt);
 		}
         TotalPriceCalculation();
 	}
@@ -174,12 +173,12 @@
 	{
 		decimal price = 0;
 
-		foreach (var product in orderList)
+        foreach (var product in dbServices.orderList)
 		{
 			price += product.Value * product.Key.ProduktPreis;
 		}
 
-		summ = price;
+		dbServices.summ = price;
 	}
 
     private void ShowId(int id)
