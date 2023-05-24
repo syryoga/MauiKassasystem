@@ -46,7 +46,7 @@
                     <label>Bild auswählen:</label>
                     <select name="ProduktBild" required @bind="product.ProduktBild">
 
-                     @foreach (var item in kategorie)
+                        @foreach (var item in kategorie)
                         {
                             <option value="@item.KategorieBild">@item.KategorieName</option>
 
@@ -58,8 +58,8 @@
                     <input type="text" name="ProduktPreis" @bind-value="product.ProduktPreis" placeholder="Preis" /> &euro;
                 </p>
                 <p class="right-align">
-                    
-                    <input type="submit" class="admin-form-btn" value="ERSTELLEN" @onclick="CreateNewProduct" />&nbsp;<input type="reset" class="admin-form-btn" value="ABBRECHEN" />
+
+                    <input type="button" class="admin-form-btn" value="ERSTELLEN" @onclick="CreateNewProduct" />&nbsp;<input type="reset" class="admin-form-btn" value="ABBRECHEN" />
                 </p>
             </form>
         </div>
@@ -69,16 +69,32 @@
 
 @code {
     Produkt product = new Produkt();
+
     List<Kategorie> kategorie = new List<Kategorie>();
 
     protected async Task CreateNewProduct()
     {
         await dbContext.CreateProductAsync(product);
+        ResetForm();
+        navman.NavigateTo("/");
     }
+
+    private void ResetForm()
+    {
+        product = new Produkt()
+        {
+            Id = 0,
+            ProduktName = "",
+            ProduktPreis = 0,
+            KategorieId = 1,
+            ProduktBild = "drawable/warm_kaffee.png"
+        };
+    }
+
     protected override async Task OnInitializedAsync()
     {
+        ResetForm();
         await dbContext.AllProductsToListAsync();
         kategorie = await dbContext.AllCategoriesToListAsync();
     }
-
 }

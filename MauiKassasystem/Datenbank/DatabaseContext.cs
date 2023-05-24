@@ -17,51 +17,66 @@ namespace MauiKassasystem.Datenbank
             _dbPath = dbPath;
         }
 
-        
+
 
         private async Task InitDbAsync()
         {
             // Wenn DB existiert mach geh raus und mach nix
             if (dbContext != null)
             {
-                
+
                 // await CreateAllTablesNew();
                 return;
             }
             else
             {
-                // Andernfalls...
 
-                // ...DB Instanzieren
-                dbContext = new SQLiteAsyncConnection(_dbPath);
-
-
-                // START: Prüfe ob die DB erzeugt wurde
-                var checkDB = await dbContext.GetTableInfoAsync(
-                    "Bilder");
-
-                if (checkDB.Count > 0)
+                try
                 {
-                    return;
+
+                    //var fs = File.Create(Path.Combine(FileSystem.AppDataDirectory, "mptest.db3"));
+                    //fs.Write(new byte[0]);
+                    //fs.Close();
+                    ////if(!File.Exists(Path.Combine(FileSystem.AppDataDirectory, "mptest.db3")))
+                    ////{
+                    ////}
+
+                    // Andernfalls...
+
+                    // ...DB Instanzieren
+                    dbContext = new SQLiteAsyncConnection(_dbPath);
+
+
+                    // START: Prüfe ob die DB erzeugt wurde
+                    var checkDB = await dbContext.GetTableInfoAsync("Bilder");
+
+                    if (checkDB.Count > 0)
+                    {
+                        return;
+                    }
+
+                    // END
+
+                    // ...Tabellen erstellen
+                    await dbContext.CreateTableAsync<Bilder>();
+                    await dbContext.CreateTableAsync<Kategorie>();
+                    await dbContext.CreateTableAsync<Money>();
+                    await dbContext.CreateTableAsync<Produkt>();
+                    await dbContext.CreateTableAsync<Verkauf>();
+                    await dbContext.CreateTableAsync<VkPositionen>();
+                    await dbContext.CreateTableAsync<Zugangsdaten>();
+
+                    // ...Standard-Kategorien und -Produkte erstellen
+                    await CreateDefaultCategoriesAsync();
+                    await CreateDefaultProductsAsync();
+
+
+                    await CreateFakeSaleAsync();
                 }
-
-                // END
-
-                // ...Tabellen erstellen
-                await dbContext.CreateTableAsync<Bilder>();
-                await dbContext.CreateTableAsync<Kategorie>();
-                await dbContext.CreateTableAsync<Money>();
-                await dbContext.CreateTableAsync<Produkt>();
-                await dbContext.CreateTableAsync<Verkauf>();
-                await dbContext.CreateTableAsync<VkPositionen>();
-                await dbContext.CreateTableAsync<Zugangsdaten>();
-
-                // ...Standard-Kategorien und -Produkte erstellen
-                await CreateDefaultCategoriesAsync();
-                await CreateDefaultProductsAsync();
-
-
-                await CreateFakeSaleAsync();
+                catch(Exception e)
+                {
+                    int x = 0;
+                }
             }
 
 
@@ -101,8 +116,8 @@ namespace MauiKassasystem.Datenbank
         public async Task CreateProductAsync(Produkt p)
         {
             SQLiteAsyncConnection conn = new(_dbPath);
-            await conn.InsertAsync(new Produkt() {Id =p.Id, KategorieId = p.KategorieId, ProduktName = p.ProduktName, ProduktBild = p.ProduktBild, ProduktPreis = p.ProduktPreis, IstAktivProdukt = true });
-            
+            await conn.InsertAsync(new Produkt() { Id = p.Id, KategorieId = p.KategorieId, ProduktName = p.ProduktName, ProduktBild = p.ProduktBild, ProduktPreis = p.ProduktPreis, IstAktivProdukt = true });
+
 
         }
         public async Task UpdateProductAsync(Produkt p)
