@@ -1,6 +1,6 @@
 ﻿@page "/bezahlungs-page"
 @using MauiKassasystem.Datenbank
-
+@using Services ser
 
 <div class="wrapper">
     <div class="topbar">
@@ -12,13 +12,13 @@
             <Button Href="/"
                     Icon="icon-cross"
                     Name="ABBRECHEN" 
-                    OnClickAction="FakeDatabase.Cancel"/>
+                    OnClickAction="moneyServices.Cancel"/>
         </div>
     </div>
     <div class="main">
         <div class="main-wrapper">
             <div class="money-display light-box">
-                @foreach (var nominal in FakeDatabase.moneyList)
+                @foreach (var nominal in moneyServices.moneyList)
                 {
                     <div class="cent1 money-cell">
                         <img src="@nominal.ImageUrl" alt="@nominal.ImageUrl" @onclick="(()=>CountUp(nominal))" style="height:@(nominal.PictureHeight > 0.00? nominal.PictureHeight : 100)%">
@@ -29,9 +29,9 @@
             </div>
             <div class="order-display light-box">
                 <div class="dark-box">
-                    @if (FakeDatabase.orderList.Count > 0)
+                    @if (dbServices.orderList.Count > 0)
                     {
-                        @foreach (var product in FakeDatabase.orderList)
+                        @foreach (var product in dbServices.orderList)
                         {
                             <div class="order-line">
                                 <span>@product.Value.ToString()x</span>
@@ -46,19 +46,19 @@
                 </div>
                 <div class="summ">
                     <span>Summe:</span>
-                    <span>€ @FakeDatabase.summ</span>
+                    <span>€ @dbServices.summ</span>
                 </div>
             </div>
             <div class="info-display light-box">
                 <span>Erhaltener Betrag:</span>
-                <span>€ @FakeDatabase.recivedMoney.ToString("0.00")</span>
+                <span>€ @dbServices.recivedMoney.ToString("0.00")</span>
             </div>
             <div class="buttons-box light-box">
 
                 <Button Href="/wechselgeld-page"
                         Icon="icon-coin-euro"
                         Name="WECHSELGELD"
-                        IsDisabled=@(FakeDatabase.summ > FakeDatabase.recivedMoney) />
+                        IsDisabled=@(dbServices.summ > dbServices.recivedMoney) />
 
                 <Button Href="/"
                         Icon="icon-arrow-left"
@@ -78,22 +78,22 @@
     private void CountUp(Money money)
     {
         money.Counter += 1;
-        FakeDatabase.recivedMoney += money.Nominal;
+        dbServices.recivedMoney += money.Nominal;
     }
     private void CountDown(Money money)
     {
         money.Counter -= 1;
-        FakeDatabase.recivedMoney -= money.Nominal;
+        dbServices.recivedMoney -= money.Nominal;
     }
 
 
     private void RessetMoney()
     {
-        foreach (var nominal in FakeDatabase.moneyList)
+        foreach (var nominal in moneyServices.moneyList)
         {
             nominal.Counter = 0;
         }
-        FakeDatabase.recivedMoney = 0;
+        dbServices.recivedMoney = 0;
     }
 
 }

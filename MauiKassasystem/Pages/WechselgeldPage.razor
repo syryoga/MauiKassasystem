@@ -1,4 +1,5 @@
 ﻿@page "/wechselgeld-page"
+@using Services ser
 
 
 
@@ -12,20 +13,20 @@
             <Button Href="/"
                     Icon="icon-cross"
                     Name="ABBRECHEN" 
-                    OnClickAction="FakeDatabase.Cancel" />
+                    OnClickAction="moneyServices.Cancel" />
         </div>
     </div>
     <div class="main">
         <div class="main-wrapper">
             <div class="money-display light-box">
-                @if (FakeDatabase.recivedMoney - FakeDatabase.summ == 0)
+                @if (dbServices.recivedMoney - dbServices.summ == 0)
                 {
                     <p class="message">Der gegebene Betrag stimmt <br /> mit der Summe überein!</p>
                     <img class="gif" src="drawable/thumbs_up_animated.gif"/>
                     <p class="instruction">Bestellund mittlels 'Abschluss'- Button <br>abschließen!</p>
 
                 }
-                @foreach (var nominal in FakeDatabase.moneyList)
+                @foreach (var nominal in moneyServices.moneyList)
                 {
                     <div class="cent1 money-cell @(nominal.Counter <= 0 ? "hidden":"")">
                         <img src="@nominal.ImageUrl" alt="@nominal.ImageUrl" style="height:@(nominal.PictureHeight > 0.00? nominal.PictureHeight : 100)%">
@@ -36,9 +37,9 @@
             </div>
             <div class="order-display light-box">
                 <div class="dark-box">
-                    @if (FakeDatabase.orderList.Count > 0)
+                    @if (dbServices.orderList.Count > 0)
                     {
-                        @foreach (var product in FakeDatabase.orderList)
+                        @foreach (var product in dbServices.orderList)
                         {
                             <div class="order-line">
                                 <span>@product.Value.ToString()x</span>
@@ -51,23 +52,23 @@
                 </div>
                 <div class="summ">
                     <span>Summe:</span>
-                    <span>€ @FakeDatabase.summ.ToString("0.00")</span>
+                    <span>€ @dbServices.summ.ToString("0.00")</span>
                 </div>
                 <div class="summ">
                     <span>Erhalten:</span>
-                    <span>€ @FakeDatabase.recivedMoney.ToString("0.00")</span>
+                    <span>€ @dbServices.recivedMoney.ToString("0.00")</span>
                 </div>
             </div>
             <div class="info-display light-box">
                 <span>Wechselgeld:</span>
-                <span>€ @(FakeDatabase.recivedMoney - FakeDatabase.summ)</span>
+                <span>€ @(dbServices.recivedMoney - dbServices.summ)</span>
             </div>
             <div class="buttons-box light-box">
                 <Button Href="/abschluss-page"
                         Icon="icon-checkmark"
                         Name="ABSCHLUSS"
                         Class="double-button"
-                        OnClickAction="@FakeDatabase.Cancel" />
+                        OnClickAction="@moneyServices.Cancel" />
             </div>
         </div>
 
@@ -78,23 +79,23 @@
 
 
 @code {
-    decimal exchangeMoney = FakeDatabase.recivedMoney - FakeDatabase.summ;
+    decimal exchangeMoney = dbServices.recivedMoney - dbServices.summ;
 
 
     protected override void OnInitialized()
     {
-        foreach (var money in FakeDatabase.moneyList)
+        foreach (var money in moneyServices.moneyList)
         {
             money.Counter = 0;
         }
 
 
-        for (int i = FakeDatabase.moneyList.Count - 1; i >= 0; i--)
+        for (int i = moneyServices.moneyList.Count - 1; i >= 0; i--)
         {
-            while (exchangeMoney >= FakeDatabase.moneyList[i].Nominal)
+            while (exchangeMoney >= moneyServices.moneyList[i].Nominal)
             {
-                exchangeMoney = exchangeMoney - FakeDatabase.moneyList[i].Nominal;
-                FakeDatabase.moneyList[i].Counter += 1;
+                exchangeMoney = exchangeMoney - moneyServices.moneyList[i].Nominal;
+                moneyServices.moneyList[i].Counter += 1;
             }
         }
 
