@@ -17,7 +17,7 @@
         </div>
     </div>
     <div class="main-wrapper">
-        @if (!FakeDatabase.IsAuthenticated)
+        @if (!passwortServices.IsAuthenticated)
         {
             <div>
 
@@ -68,7 +68,7 @@
                         {
                             <p style="color: red;">Die eingaben stimmen nicht überein.</p>
                         }
-                        <button class="m-button button-primary" @onclick="FakeDatabase.SaveNewPassword" disabled="@(!ArePasswordsMatching())">Speichern</button>
+                        <button class="m-button button-primary" @onclick="passwortServices.SaveNewPassword" disabled="@(!ArePasswordsMatching())">Speichern</button>
                         @*<button class="m-button button-primary" @onclick="CancelResetPassword">Abbrechen</button>*@
                         <br />
 
@@ -124,16 +124,16 @@
     //Admin Login
     private void Login()
     {
-        if (FakeDatabase.adminzugangsdaten.AdminPassword == Password)
+        if (passwortServices.adminzugangsdaten.AdminPassword == Password)
         {
-            FakeDatabase.IsAuthenticated = true;
+            passwortServices.IsAuthenticated = true;
             navman.NavigateTo("/admin-page");
         }
     }
 
     private void Logout()
     {
-        FakeDatabase.IsAuthenticated = false;
+        passwortServices.IsAuthenticated = false;
         navman.NavigateTo("/");
     }
 
