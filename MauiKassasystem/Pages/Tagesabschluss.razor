@@ -9,7 +9,7 @@
 
 		<label>Tagesabschluss:  </label>
 		
-		<div class="ausgabe"  > €  </div>
+		<div class="ausgabe"  >@tagesabschlussSumme €  </div>
 		
 	</div>
 
@@ -49,5 +49,16 @@
 
 
 @code {
+	List<Verkauf> posList = new List<Verkauf>();
+	private decimal tagesabschlussSumme = 0.00m;
 
+	protected override async Task OnInitializedAsync()
+	{
+		posList = await dbContext.AllVkPositionsToListAsync();
+
+		foreach (var item in posList)
+		{
+			tagesabschlussSumme += item.Gesamtpreis;
+		}
+	}
 }
