@@ -1,4 +1,4 @@
-﻿@page "/produkt-bearbeiten"
+﻿@page "/produkt-bearbeiten-non-admin"
 @*@page "/produkt-bearbeiten/{id}"*@
 @inject DatabaseContext dbContext;
 
@@ -7,47 +7,48 @@
 
 	<div class="topbar">
 		<div class="logo-wrapper">
-			<a href="#"><img src="drawable/Logo_BBRZ.png" alt="BBRZ" height="50" /></a>
-		</div>
-		<h1 class="pagename">Produkt bearbeiten</h1>
-		<div class="topbar-btn-wrapper">
-			<a class="button-primary logout-btn" href="/"><span>ABMELDEN</span></a>
-		</div>
-	</div>
+			<a href="#"><img src="drawable/Logo_BBRZ.png" alt="BBRZ" height="50" /></a> 
+		</div>@*
+        <div class="topbar-btn-wrapper">
+            <Button Href="/"
+                    Icon="icon-exit"
+                    Name="ZURÜCK" />
+        </div>*@
+    </div>
+	
 
 
 
 
-
-    <div class="admin-form-wrapper">
+	<div class="admin-form-wrapper">
 		<div class="dark-box admin-form-box">
-			
-
-				<p>
-					<label>Produkt wählen:</label>
-					<select id="prod" @bind="@_catId">
-						<option hidden checked></option>
-						@foreach (var item in products)
-						{
-							<option value="@item.KategorieId" onchange="@UpdateCat(); @UpdatePic(); @UpdatePrice(); ">@item.ProduktName</option>
-						}
-					</select>
-				</p>
 
 
-				<p><label>Kategorie:</label><input value="@_catName" disabled="disabled" /></p>
-
-				<p>
-					<label>Bild:</label>
-					@if (_catPic != null)
+			<p>
+				<label>Produkt wählen:</label>
+				<select id="prod" @bind="@_catId">
+					<option hidden checked></option>
+					@foreach (var item in products)
 					{
-						<img height="32px" src="@_catPic"/>
+						<option value="@item.KategorieId" onchange="@UpdateCat(); @UpdatePic(); @UpdatePrice(); ">@item.ProduktName</option>
 					}
+				</select>
+			</p>
 
-				</p>
-				<p><label>Preis:</label><input type="text" value="@_prodPrice" disabled="disabled" />&euro;</p>
-				<p class="right-align"><input type="submit" class="admin-form-btn btn-inactive" value="Senden" />&nbsp;<input type="submit" class="admin-form-btn" value="Abbrechen" /></p>
-			
+
+			<p><label>Kategorie:</label><input value="@_catName" disabled="disabled" /></p>
+
+			<p>
+				<label>Bild:</label>
+				@if (_catPic != null)
+				{
+					<img height="32px" src="@_catPic" />
+				}
+
+			</p>
+			<p><label>Preis:</label><input type="text" value="@_prodPrice" disabled="disabled" />&euro;</p>
+			<p class="right-align"><input type="submit" class="admin-form-btn btn-inactive" value="Senden" />&nbsp;<input type="submit" class="admin-form-btn" value="Abbrechen" /></p>
+
 		</div>
 	</div>
 
@@ -118,3 +119,4 @@
 		return null;
 	}
 }
+
