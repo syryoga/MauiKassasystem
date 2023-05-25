@@ -1,4 +1,6 @@
-﻿using MauiKassasystem.Model;
+﻿using MauiKassasystem.Datenbank;
+using MauiKassasystem.Model;
+using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,11 +27,20 @@ namespace MauiKassasystem.Services
 
     };
 
-        public static void Cancel()
+        public static async void Cancel()
         {
+           
+            foreach(var item in dbServices.orderList)
+            {
+                Verkauf v = new Verkauf();
+                v.ProduktId = item.Key.Id;
+                v.Anzahl = item.Value;
+                v.Einzelpreis = item.Key.ProduktPreis;
+                v.Gesamtpreis = item.Value * v.Einzelpreis;
 
-            
-
+                DatabaseContext dbContext = new DatabaseContext(Path.Combine(FileSystem.AppDataDirectory, "kassadb.sqlite"));
+                await dbContext.SaveSaleAsync(v);
+            }
 
             dbServices.orderList.Clear();
             dbServices.summ = 0;
