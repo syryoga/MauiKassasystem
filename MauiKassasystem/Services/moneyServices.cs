@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MauiKassasystem;
 
 namespace MauiKassasystem.Services
 {
@@ -38,7 +39,7 @@ namespace MauiKassasystem.Services
                 v.Einzelpreis = item.Key.ProduktPreis;
                 v.Gesamtpreis = item.Value * v.Einzelpreis;
 
-                DatabaseContext dbContext = new DatabaseContext(Path.Combine(FileSystem.AppDataDirectory, "kassadb.sqlite"));
+                DatabaseContext dbContext = new DatabaseContext(Path.Combine(FileSystem.AppDataDirectory, "kassadbtest.sqlite1"));
                 await dbContext.SaveSaleAsync(v);
             }
 

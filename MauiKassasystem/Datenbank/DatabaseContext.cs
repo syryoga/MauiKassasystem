@@ -68,7 +68,6 @@ namespace MauiKassasystem.Datenbank
                     await CreateDefaultProductsAsync();
 
 
-                    await CreateFakeSaleAsync();
                
             }
 
@@ -220,20 +219,6 @@ namespace MauiKassasystem.Datenbank
         #endregion
 
 
-        #region Fake-Sales 
-
-        private async Task CreateFakeSaleAsync()
-        {
-            Verkauf vk1 = new Verkauf { ProduktId = 1, Anzahl = 2, Einzelpreis = 4, Gesamtpreis = 8 };
-
-            await dbContext.InsertAsync(vk1);
-
-            VkPositionen vkp1 = new VkPositionen { Datum = DateTime.Now, VerkaufsId = 1 };
-
-            await dbContext.InsertAsync(vkp1);
-
-        }
-        #endregion
 
 
         private async Task CreateAllTablesNew()

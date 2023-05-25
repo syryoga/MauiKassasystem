@@ -3,38 +3,40 @@
 
 
 
+
 <div class="dark-box admin-form-box">
 
-	<div class="tagesabschluss">
+    <div class="tagesabschluss">
 
-		<label>Tagesabschluss:  </label>
-		
-		<div class="ausgabe"  >@tagesabschlussSumme €  </div>
-		
-	</div>
+        <label>Tagesabschluss:  </label>
 
-	<br />
+        <div class="ausgabe">@tagesabschlussSumme €  </div>
 
+    </div>
 
+    <br />
 
 
-	<div class="btn-wrapper">
-
-		<div class="exportList">
-
-			<label>Bestell-Liste:</label> 
-			<Button Href="/"
-					Icon="icon-export"
-					Name=" Exportieren" />
-		</div>
-	</div>
-	<br />
 
 
-	<div class="admin-form-btn">
-		<Button Href="/"
-				Name="ZURÜCK" />
-	</div>
+    <div class="btn-wrapper">
+
+        <div class="exportList">
+
+            <label>Bestell-Liste:</label>
+            <Button Href="/"
+                    Icon="icon-export"
+                    Name=" Exportieren" 
+            OnClickAction="ExportVerkaufData" />
+        </div>
+    </div>
+    <br />
+
+
+    <div class="admin-form-btn">
+        <Button Href="/"
+                Name="ZURÜCK" />
+    </div>
 
 
 
@@ -49,16 +51,45 @@
 
 
 @code {
-	List<Verkauf> posList = new List<Verkauf>();
-	private decimal tagesabschlussSumme = 0.00m;
+    List<Verkauf> posList = new List<Verkauf>();
 
-	protected override async Task OnInitializedAsync()
-	{
-		posList = await dbContext.AllVkPositionsToListAsync();
 
-		foreach (var item in posList)
-		{
-			tagesabschlussSumme += item.Gesamtpreis;
-		}
-	}
+    private decimal tagesabschlussSumme = 0.00m;
+
+    protected override async Task OnInitializedAsync()
+    {
+        posList = await dbContext.AllVkPositionsToListAsync();
+
+        foreach (var item in posList)
+        {
+            tagesabschlussSumme += item.Gesamtpreis;
+
+        }
+    }
+
+    private async void ExportVerkaufData()
+    {
+        string csvFilePath = Path.Combine("/storage/emulated/0/Documents/test1.csv");
+        await ExportVerkaufDataToCSV(csvFilePath);
+    }
+
+    public async Task ExportVerkaufDataToCSV(string csvFilePath)
+    {
+        //await InitDbAsync();
+
+        // Abrufen der Daten aus der Tabelle "Verkauf"
+        posList = await dbContext.AllVkPositionsToListAsync();
+
+        // Header für die CSV-Datei erstellen
+        string csvHeader = "VerkaufId,ProduktId,Anzahl,Einzelpreis,Gesamtpreis";
+
+        // Datenzeilen für die CSV-Datei erstellen
+        List<string> csvLines = posList.Select(v => $"{v.Id},{v.ProduktId},{v.Anzahl},{v.Einzelpreis},{v.Gesamtpreis}").ToList();
+
+        // Gesamten Inhalt für die CSV-Datei erstellen
+        string csvContent = $"{csvHeader}\n{string.Join("\n", csvLines)}";
+
+        // CSV-Datei speichern
+        File.WriteAllText(csvFilePath, csvContent);
+    }
 }

@@ -1,5 +1,6 @@
 ﻿using MauiKassasystem.Datenbank;
 using Microsoft.AspNetCore.Components.WebView.Maui;
+using System.Security.Cryptography.X509Certificates;
 
 namespace MauiKassasystem;
 
@@ -7,7 +8,12 @@ public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
     {
-        var builder = MauiApp.CreateBuilder();
+        
+
+
+
+
+    var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
             .ConfigureFonts(fonts =>
@@ -26,15 +32,15 @@ public static class MauiProgram
 
         var dbPath = "";
 
-        var dbFileName = "kassadb.sqlite";
+        var dbFileName = "kassadbtest.sqlite1";
 
         if (platform == DevicePlatform.Android)
         {
-            dbPath = $"/storage/emulated/0/Android/data/com.companyname.mauikassasystem/files/{dbFileName}";
+            dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), dbFileName);
         }
         else if (platform == DevicePlatform.WinUI)
         {
-            //dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"C:\Users\PC98FA9BFD51B5\Kassa007DBv9.3.db");
+            dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"C:\Users\PC98FA9BFD51B5\Kassa007DBv9.3.db");
             dbPath = Path.Combine(FileSystem.AppDataDirectory, dbFileName);
         }
         else
