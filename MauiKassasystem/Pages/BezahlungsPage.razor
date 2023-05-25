@@ -36,9 +36,9 @@
                             <div class="order-line">
                                 <span>@product.Value.ToString()x</span>
                                 <span>@product.Key.ProduktName</span>
-                                <span>€ @(product.Key.ProduktPreis * product.Value)</span>
-                                <div class="minus-button" style="cursor:pointer" @onclick="()=>FakeDatabase.RemoveProduct(product.Key)">-</div>
-                                <div class="add-button" style="cursor:pointer" @onclick="()=>FakeDatabase.AddProduktToOrderList(product.Key)">+</div>
+                                <span>€ @((product.Key.ProduktPreis * product.Value).ToString("0.00"))</span>
+                                <div class="minus-button" style="cursor:pointer" @onclick="()=>MainPage.RemoveProduct(product.Key)">-</div>
+                                <div class="add-button" style="cursor:pointer" @onclick="()=>MainPage.AddProduktToOrderList(product.Key)">+</div>
                             </div>
                         }
                     }
