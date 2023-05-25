@@ -30,7 +30,7 @@ public static class MauiProgram
 
         if (platform == DevicePlatform.Android)
         {
-            dbPath = $"/storage/emulated/0/Android/data/com.companyname.mauikassasystem/files/{dbFileName}";
+            dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Kassa007DBv9.3.db");
         }
         else if (platform == DevicePlatform.WinUI)
         {

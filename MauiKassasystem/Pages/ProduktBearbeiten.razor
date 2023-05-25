@@ -5,48 +5,121 @@
 <div class="admin-wrapper">
 
 
-    <div class="topbar">
-        <div class="logo-wrapper">
-            <a href="#"><img src="drawable/Logo_BBRZ.png" alt="BBRZ" height="50" /></a>
-        </div>
-        <h1 class="pagename">Produkt bearbeiten</h1>
-        <div class="topbar-btn-wrapper">
-            <a class="button-primary logout-btn" href="/"><span>ABMELDEN</span></a>
-        </div>
-    </div>
+	<div class="topbar">
+		<div class="logo-wrapper">
+			<a href="#"><img src="drawable/Logo_BBRZ.png" alt="BBRZ" height="50" /></a>
+		</div>
+		<h1 class="pagename">Produkt bearbeiten</h1>
+		<div class="topbar-btn-wrapper">
+			<a class="button-primary logout-btn" href="/"><span>ABMELDEN</span></a>
+		</div>
+	</div>
 
 
 
-    <div class="admin-btn-box">
-        <a class="admin-button button-primary" href="/produkt-erstellen">PRODUKT<br />ERSTELLEN</a>
-        <a class="admin-button button-primary" href="/produkt-bearbeiten">PRODUKT<br />BEARBEITEN</a>
-        <a class="admin-button button-primary" href="/">PASSWORT<br />ZUR&Uuml;CKSETZEN</a>
-        <a class="admin-button button-primary" href="/">ADMIN<br />E-MAIL &Auml;NDERN</a>
-    </div>
+	<div class="admin-btn-box">
+		<a class="admin-button button-primary" href="/produkt-erstellen">PRODUKT<br />ERSTELLEN</a>
+		<a class="admin-button button-primary" href="/produkt-bearbeiten">PRODUKT<br />BEARBEITEN</a>
+		<a class="admin-button button-primary" href="/">PASSWORT<br />ZUR&Uuml;CKSETZEN</a>
+		<a class="admin-button button-primary" href="/">ADMIN<br />E-MAIL &Auml;NDERN</a>
+	</div>
 
-    <div class="admin-form-wrapper">
-        <div class="dark-box admin-form-box">
-            <form action="#">
+	<div class="admin-form-wrapper">
+		<div class="dark-box admin-form-box">
+			
 
-                <p><label>Kategorie wählen:</label><input type="text" name="Kategorie" placeholder="Kategorie" /></p>
-                <p><label>Produktnamen eingeben:</label><input type="text" name="Produktname" placeholder="Name" /></p>
-                <p><label>Bild auswählen:</label><select name="Produktbild" placeholder="Bild" /></p>
-                <p><label>Preis eingeben:</label><input type="text" name="Produktpreis" placeholder="Preis" /> &euro;</p>
-                <p class="right-align"><input type="submit" class="admin-form-btn btn-inactive" value="Senden" />&nbsp;<input type="submit" class="admin-form-btn" value="Abbrechen" /></p>
-            </form>
-        </div>
-    </div>
+				<p>
+					<label>Produkt wählen:</label>
+					<select id="prod" @bind="@_catId">
+						<option hidden checked></option>
+						@foreach (var item in products)
+						{
+							<option value="@item.KategorieId" onchange="@UpdateCat(); @UpdatePic(); @UpdatePrice(); ">@item.ProduktName</option>
+						}
+					</select>
+				</p>
+
+
+				<p><label>Kategorie:</label><input value="@_catName" disabled="disabled" /></p>
+
+				<p>
+					<label>Bild:</label>
+					@if (_catPic != null)
+					{
+						<img height="32px" src="@_catPic"/>
+					}
+
+				</p>
+				<p><label>Preis:</label><input type="text" value="@_prodPrice" disabled="disabled" />&euro;</p>
+				<p class="right-align"><input type="submit" class="admin-form-btn btn-inactive" value="Senden" />&nbsp;<input type="submit" class="admin-form-btn" value="Abbrechen" /></p>
+			
+		</div>
+	</div>
 
 
 
 </div>
 
 @code {
-    List<Produkt> products = new List<Produkt>();
+	List<Produkt> products = new();
 
-    //protected override async Task OnInitializedAsync()
-    //{
-    //    //products = await dbContext.GetProductByIdAsync();
-    //}
+	List<Kategorie> kategories = new();
 
+	int _catId;
+
+	string _catName;
+
+	string _prodPrice;
+
+	string _catPic;
+
+	protected override async Task OnInitializedAsync()
+	{
+		kategories = await dbContext.AllCategoriesToListAsync();
+		products = await dbContext.AllProductsToListAsync();
+	}
+
+
+}
+
+@functions
+{
+
+	public string UpdatePrice()
+	{
+		foreach (var item in products)
+		{
+			if (_catId.Equals(item.KategorieId))
+			{
+				return _prodPrice = item.ProduktPreis.ToString("0.00");
+			}
+
+		}
+		return null;
+	}
+
+	public string UpdatePic()
+	{
+		foreach (var item in products)
+		{
+			if (_catId.Equals(item.KategorieId))
+			{
+				return _catPic = item.ProduktBild;
+			}
+
+		}
+		return null;
+	}
+
+	public string UpdateCat()
+	{
+		foreach (var item in kategories)
+		{
+			if (_catId.Equals(item.Id))
+			{
+				return _catName = item.KategorieName;
+			}
+		}
+		return null;
+	}
 }
