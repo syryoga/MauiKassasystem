@@ -1,5 +1,5 @@
 ﻿@page "/wechselgeld-page"
-@using Services ser
+
 
 
 
@@ -44,7 +44,7 @@
                             <div class="order-line">
                                 <span>@product.Value.ToString()x</span>
                                 <span>@product.Key.ProduktName</span>
-                                <span>€ @(product.Key.ProduktPreis * product.Value)</span>
+                                <span>€ @((product.Key.ProduktPreis * product.Value).ToString("0.00"))</span>
                             </div>
                         }
                     }
@@ -61,7 +61,7 @@
             </div>
             <div class="info-display light-box">
                 <span>Wechselgeld:</span>
-                <span>€ @(dbServices.recivedMoney - dbServices.summ)</span>
+                <span>€ @((dbServices.recivedMoney - dbServices.summ).ToString("0.00"))</span>
             </div>
             <div class="buttons-box light-box">
                 <Button Href="/abschluss-page"

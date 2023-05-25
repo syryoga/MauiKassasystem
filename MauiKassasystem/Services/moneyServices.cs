@@ -27,6 +27,10 @@ namespace MauiKassasystem.Services
 
         public static void Cancel()
         {
+
+            
+
+
             dbServices.orderList.Clear();
             dbServices.summ = 0;
 
