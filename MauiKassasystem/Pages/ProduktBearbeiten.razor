@@ -21,8 +21,8 @@
 
     <div class="admin-form-wrapper">
 		<div class="dark-box admin-form-box">
+			<form>
 			
-
 				<p>
 					<label>Produkt wählen:</label>
 					<select id="prod" @bind="@_catId">
@@ -32,30 +32,45 @@
 							<option value="@item.KategorieId" onchange="@UpdateCat(); @UpdatePic(); @UpdatePrice(); ">@item.ProduktName</option>
 						}
 					</select>
+					<input placeholder="Neuer Produktname" style="margin-left: 70px;" />
 				</p>
 
-
-				<p><label>Kategorie:</label><input value="@_catName" disabled="disabled" /></p>
-
+			
+				<p><label>Kategorie:</label><input value="@_catName" disabled="disabled" /> <input placeholder="Neue Kategorie" style="margin-left: 70px;" /></p>
+				
 				<p>
 					<label>Bild:</label>
 					@if (_catPic != null)
 					{
 						<img height="32px" src="@_catPic"/>
 					}
+					<select style="margin-left: 200px;">
+						
+					</select>
 
 				</p>
-				<p><label>Preis:</label><input type="text" value="@_prodPrice" disabled="disabled" />&euro;</p>
-				<p class="right-align"><input type="submit" class="admin-form-btn btn-inactive" value="Senden" />&nbsp;<input type="submit" class="admin-form-btn" value="Abbrechen" /></p>
-			
+				<p><label>Preis:</label><input type="text" value="@_prodPrice" disabled="disabled" />&euro; <input type="text" placeholder="Neuer Preis" style="margin-left: 70px;" />&euro;</p>
+				
+
+				<p class="right-align"><input type="submit" class="admin-form-btn btn-inactive" value="Senden"/>&nbsp;<input type="submit" class="admin-form-btn" value="Abbrechen" style="margin-right:40px;"/></p>
+			</form>
+
 		</div>
 	</div>
 
-
-
+	
+	imageSource
 </div>
 
 @code {
+	private string imageSource;
+
+	
+
+	
+
+	
+
 	List<Produkt> products = new();
 
 	List<Kategorie> kategories = new();

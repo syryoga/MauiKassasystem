@@ -35,14 +35,14 @@
 .admin-form-wrapper {
     font-size: smaller;
     display: grid;
-    grid-template-columns: 1fr 600px 1fr;
+    grid-template-columns: 1fr 800px 1fr;
 }
 
 .admin-form-box {
     grid-column-start: 2;
     grid-column-end: 2;
     margin-top: 100px;
-    padding: 40px 60px 0;
+    padding: 40px 0 0;
 }
 
 
