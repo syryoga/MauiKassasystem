@@ -11,7 +11,7 @@
 		</div>
 		<h1 class="pagename">Produkt bearbeiten</h1>
 		<div class="topbar-btn-wrapper">
-			<a class="button-primary logout-btn" href="/"><span>ABMELDEN</span></a>
+			<a class="button-primary logout-btn" href="/"><span>ZURÜCK</span></a>
 		</div>
 	</div>
 
@@ -25,11 +25,11 @@
 			
 				<p>
 					<label>Produkt wählen:</label>
-					<select id="prod" @bind="@_catId">
+					<select id="prod" @bind="@_prodId">
 						<option hidden checked></option>
 						@foreach (var item in products)
 						{
-							<option value="@item.KategorieId" onchange="@UpdateCat(); @UpdatePic(); @UpdatePrice(); ">@item.ProduktName</option>
+							<option value="@item.Id" onchange="@UpdateCat(); @UpdatePic(); @UpdatePrice(); ">@item.ProduktName</option>
 						}
 					</select>
 					<input placeholder="Neuer Produktname" style="margin-left: 70px;" />
@@ -42,31 +42,29 @@
 					<label>Bild:</label>
 					@if (_catPic != null)
 					{
-						<img height="32px" src="@_catPic"/>
+						<img height="32" src="@_catPic"/>
 					}
-					<select style="margin-left: 200px;">
-						
-					</select>
+					
+						<img height="32" src="@_catPic" />
+					
 
 				</p>
 				<p><label>Preis:</label><input type="text" value="@_prodPrice" disabled="disabled" />&euro; <input type="text" placeholder="Neuer Preis" style="margin-left: 70px;" />&euro;</p>
 				
 
-				<p class="right-align"><input type="submit" class="admin-form-btn btn-inactive" value="Senden"/>&nbsp;<input type="submit" class="admin-form-btn" value="Abbrechen" style="margin-right:40px;"/></p>
+				<p class="right-align"><input type="submit" class="admin-form-btn btn-inactive" value="Senden" @onclick="UpdateProduct"/>&nbsp;<input type="submit" class="admin-form-btn" value="Abbrechen" style="margin-right:40px;"/></p>
 			</form>
 
 		</div>
 	</div>
 
 	
-	imageSource
 </div>
 
 @code {
-	private string imageSource;
-
 	
 
+	
 	
 
 	
@@ -74,6 +72,10 @@
 	List<Produkt> products = new();
 
 	List<Kategorie> kategories = new();
+
+	Produkt product = new();
+
+	int _prodId;
 
 	int _catId;
 
@@ -85,8 +87,14 @@
 
 	protected override async Task OnInitializedAsync()
 	{
+		//kategories = await dbContext.
 		kategories = await dbContext.AllCategoriesToListAsync();
 		products = await dbContext.AllProductsToListAsync();
+	}
+
+	protected async Task UpdateProduct()
+	{
+		await dbContext.UpdateProductAsync(product);
 	}
 
 
@@ -99,7 +107,7 @@
 	{
 		foreach (var item in products)
 		{
-			if (_catId.Equals(item.KategorieId))
+			if (item.Id.Equals(_prodId))
 			{
 				return _prodPrice = item.ProduktPreis.ToString("0.00");
 			}
@@ -112,7 +120,7 @@
 	{
 		foreach (var item in products)
 		{
-			if (_catId.Equals(item.KategorieId))
+			if (item.Id.Equals(_prodId))
 			{
 				return _catPic = item.ProduktBild;
 			}
@@ -123,11 +131,27 @@
 
 	public string UpdateCat()
 	{
-		foreach (var item in kategories)
+		foreach (var item in products)
 		{
-			if (_catId.Equals(item.Id))
+			if (_prodId.Equals(item.Id))
 			{
-				return _catName = item.KategorieName;
+				_catId = item.KategorieId;
+				switch (_catId.ToString())
+				{
+					case "1":
+						_catName = "Warm";
+						break;
+					case "2":
+						_catName = "Kalt";
+						break;
+					case "3":
+						_catName = "Snack";
+						break;
+					case "4":
+						_catName = "Sonstiges";
+						break;
+				}
+				return _catName;
 			}
 		}
 		return null;
