@@ -58,18 +58,19 @@
 
     protected override async Task OnInitializedAsync()
     {
-        posList = await dbContext.AllVkPositionsToListAsync();
-
-        foreach (var item in posList)
+        posList = await dbContext.VkPositionsToListAsync();
+        var newPosList = posList.Where(x => x.Datum.Date == DateTime.Now.Date);
+        foreach (var item in newPosList)
         {
             tagesabschlussSumme += item.Gesamtpreis;
 
         }
     }
 
-    private async void ExportVerkaufData()
+    public async void ExportVerkaufData()
     {
-        string csvFilePath = Path.Combine("/storage/emulated/0/Documents/test1.csv");
+        //string csvFilePath = Path.Combine("/storage/emulated/0/Documents/test1.csv");
+        string csvFilePath = @"C:\Users\PC98FA9BFD51B5\source\repos\syryoga\test2.csv";
         await ExportVerkaufDataToCSV(csvFilePath);
     }
 
@@ -78,13 +79,14 @@
         //await InitDbAsync();
 
         // Abrufen der Daten aus der Tabelle "Verkauf"
-        posList = await dbContext.AllVkPositionsToListAsync();
+        posList = await dbContext.VkPositionsToListAsync();
+        var newPosList = posList.Where(x => x.Datum.Date == DateTime.Now.Date);
 
         // Header für die CSV-Datei erstellen
-        string csvHeader = "VerkaufId,ProduktId,Anzahl,Einzelpreis,Gesamtpreis";
+        string csvHeader = "VerkaufId;ProduktId;ProduktName;Anzahl;Einzelpreis;Gesamtpreis;Datum";
 
         // Datenzeilen für die CSV-Datei erstellen
-        List<string> csvLines = posList.Select(v => $"{v.Id},{v.ProduktId},{v.Anzahl},{v.Einzelpreis},{v.Gesamtpreis}").ToList();
+        List<string> csvLines = newPosList.Select(v => $"{v.Id};{v.ProduktId};{v.ProduktName};{v.Anzahl};{v.Einzelpreis};{v.Gesamtpreis};{v.Datum.ToString("dd.MM.yyyy HH:mm:ss")}").ToList();
 
         // Gesamten Inhalt für die CSV-Datei erstellen
         string csvContent = $"{csvHeader}\n{string.Join("\n", csvLines)}";

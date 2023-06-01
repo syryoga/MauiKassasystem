@@ -2,6 +2,7 @@
 @inject DatabaseContext dbContext
 
 
+
 <div class="wrapper">
     <div class="topbar">
         <div class="logo-wrapper">
@@ -119,7 +120,7 @@
             <div class="popup-content">
                 <h4>Achtung!!!</h4>
                 <p>Wollen Sie wirklich stornieren?</p>
-                <button class="m-button button-primary">Stornieren</button>  @*@onclick="HandleStorno" *@
+                <button class="m-button button-primary" @onclick="HandleStorno">Stornieren</button>  @*@onclick="HandleStorno" *@
                 <button class="m-button button-primary" @onclick="ClosePopup">Abbrechen</button>
             </div>
         </div>
@@ -134,53 +135,53 @@
 
 
     List<Kategorie> kategories = new List<Kategorie>();
-	List<Produkt> products = new List<Produkt>();
-	List<Verkauf> sales = new List<Verkauf>();
+    List<Produkt> products = new List<Produkt>();
+    List<Verkauf> sales = new List<Verkauf>();
 
 
     protected override async Task OnInitializedAsync()
     {
         products = await dbContext.AllProductsToListAsync();
         kategories = await dbContext.AllCategoriesToListAsync();
-        sales = await dbContext.AllVkPositionsToListAsync();
+        sales = await dbContext.VkPositionsToListAsync();
     }
 
-	public static void AddProduktToOrderList(Produkt produkt)
-	{
+    public static void AddProduktToOrderList(Produkt produkt)
+    {
         if (!dbServices.orderList.ContainsKey(produkt))
-		{
+        {
             dbServices.orderList.Add(produkt, 1);
-		}
-		else
-		{
+        }
+        else
+        {
             dbServices.orderList[produkt] += 1;
-		}
+        }
         TotalPriceCalculation();
-	}
-	public static void RemoveProduct(Produkt produkt)
-	{
+    }
+    public static void RemoveProduct(Produkt produkt)
+    {
         dbServices.orderList[produkt] -= 1;
 
         if (dbServices.orderList[produkt] < 1)
-		{
+        {
             dbServices.orderList.Remove(produkt);
-		}
+        }
         TotalPriceCalculation();
-	}
+    }
 
-	
 
-	public static void TotalPriceCalculation()
-	{
-		decimal price = 0;
+
+    public static void TotalPriceCalculation()
+    {
+        decimal price = 0;
 
         foreach (var product in dbServices.orderList)
-		{
-			price += product.Value * product.Key.ProduktPreis;
-		}
+        {
+            price += product.Value * product.Key.ProduktPreis;
+        }
 
-		dbServices.summ = price;
-	}
+        dbServices.summ = price;
+    }
 
     private void ShowId(int id)
     {
@@ -219,8 +220,21 @@
     }
 
     // Methode zum Behandeln der Storno-Aktion
-    void HandleStorno()
+    public async void HandleStorno()
     {
+        List<Verkauf> posList = new List<Verkauf>();
+
+        posList = await dbContext.VkPositionsToListAsync();
+
+        Verkauf delVerkauf = posList[posList.Count - 1];
+
+        string lastTimeStamp = delVerkauf.TimeStamp;
+
+        await dbContext.SaveStornoAsync(lastTimeStamp);
+
+
+
+
         // Fügen Sie hier den Code ein, der bei Storno ausgeführt werden soll
         CloseConfirmationPopup();
     }

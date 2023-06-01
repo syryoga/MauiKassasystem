@@ -150,10 +150,28 @@ namespace MauiKassasystem.Datenbank
             await InitDbAsync();
             await dbContext.InsertAsync(v);
         }
-        public async Task DeleteSaleAsync(Verkauf v)
+
+        public async Task SaveStornoSaleAsync(Verkauf v)
         {
             await InitDbAsync();
-            await dbContext.DeleteAsync(v);
+            await dbContext.InsertAsync(v);
+        }
+        public async Task SaveStornoAsync(string timeStamp)
+        {
+            await InitDbAsync();
+
+            List<Verkauf> verkaeufe = await dbContext.Table<Verkauf>().Where(x => x.TimeStamp == timeStamp).ToListAsync();
+
+            foreach (var item in verkaeufe)
+            {
+                item.Gesamtpreis = -item.Gesamtpreis;
+                item.Einzelpreis = -item.Einzelpreis;
+                item.Anzahl = -item.Anzahl;
+                await dbContext.InsertAsync(item);
+
+
+            }
+
         }
         public async Task<List<VkPositionen>> AllSalesToListAsync()
         {
@@ -161,7 +179,7 @@ namespace MauiKassasystem.Datenbank
             return await dbContext.Table<VkPositionen>().ToListAsync();
         }
 
-        public async Task<List<Verkauf>> AllVkPositionsToListAsync()
+        public async Task<List<Verkauf>> VkPositionsToListAsync()
         {
             await InitDbAsync();
             return await dbContext.Table<Verkauf>().ToListAsync();
