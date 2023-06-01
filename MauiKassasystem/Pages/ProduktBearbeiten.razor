@@ -25,19 +25,28 @@
 			
 				<p>
 					<label>Produkt wählen:</label>
-					<select id="prod" @bind="@_prodId">
+					<select @bind="@_prodId">
 						<option hidden checked></option>
 						@foreach (var item in products)
 						{
 							<option value="@item.Id" onchange="@UpdateCat(); @UpdatePic(); @UpdatePrice(); ">@item.ProduktName</option>
 						}
 					</select>
-					<input placeholder="Neuer Produktname" style="margin-left: 70px;" />
+					<input placeholder="Neuer Produktname" @bind-value="product.ProduktName" style="margin-left: 70px;" />
 				</p>
 
 			
-				<p><label>Kategorie:</label><input value="@_catName" disabled="disabled" /> <input placeholder="Neue Kategorie" style="margin-left: 70px;" /></p>
-				
+				<p><label>Kategorie:</label><input value="@_catName" disabled="disabled" /> @*<input placeholder="Neue Kategorie" @bind-value="product.KategorieId" style="margin-left: 70px;" />*@
+
+					<select @bind="product.KategorieId" style="margin-left: 70px;">
+						<option disabled="disabled" hidden checked>Neue Kategorie</option>
+						@foreach (var item in kategories)
+						{
+							<option value="@item.Id">@item.KategorieName</option>
+						}
+					</select>
+				</p>
+
 				<p>
 					<label>Bild:</label>
 					@if (_catPic != null)
@@ -45,11 +54,23 @@
 						<img height="32" src="@_catPic"/>
 					}
 					
-						<img height="32" src="@_catPic" />
+					<select @bind="product.ProduktBild" style="margin-left: 210px;">
+						@foreach (var item in pictures)
+						{
+							<option value="@item.Value"><p> @item.Key </p></option>
+							
+							
+						}
+					</select>
+					
+					<img height="32" src="@product.ProduktBild" />
+					
+							
+					
 					
 
 				</p>
-				<p><label>Preis:</label><input type="text" value="@_prodPrice" disabled="disabled" />&euro; <input type="text" placeholder="Neuer Preis" style="margin-left: 70px;" />&euro;</p>
+				<p><label>Preis:</label><input type="text" value="@_prodPrice" disabled="disabled" />&euro; <input type="text" placeholder="Neuer Preis" @bind-value="product.ProduktPreis" style="margin-left: 70px;" />&euro;</p>
 				
 
 				<p class="right-align"><input type="submit" class="admin-form-btn btn-inactive" value="Senden" @onclick="UpdateProduct"/>&nbsp;<input type="submit" class="admin-form-btn" value="Abbrechen" style="margin-right:40px;"/></p>
@@ -62,11 +83,15 @@
 </div>
 
 @code {
-	
+
+	Dictionary<string, string> pictures = new();
+
+
+
 
 	
 	
-
+	
 	
 
 	List<Produkt> products = new();
@@ -87,13 +112,25 @@
 
 	protected override async Task OnInitializedAsync()
 	{
-		//kategories = await dbContext.
+		pictures.Add("Infused", "drawable/kalt_infused.png");
+		pictures.Add("Mineral", "drawable/kalt_mineral.png");
+		pictures.Add("Saft", "drawable/kalt_saft.png");
+		pictures.Add("Shake", "drawable/kalt_shake.png");
+		pictures.Add("Smoothie", "drawable/kalt_smoothie.png");
+		pictures.Add("Obst", "drawable/snack_obst.png");
+		pictures.Add("Sandwich", "drawable/snack_sandwich.png");
+		pictures.Add("Kuchen", "drawable/sonst_kuchen.png");
+		pictures.Add("Trinken", "drawable/sonst_trinken.png");
+		pictures.Add("Kaffe", "drawable/warm_kaffee.png");
+		pictures.Add("Milch", "drawable/warm_milch.png");
+		pictures.Add("Tee", "drawable/warm_tee.png");
 		kategories = await dbContext.AllCategoriesToListAsync();
 		products = await dbContext.AllProductsToListAsync();
 	}
 
 	protected async Task UpdateProduct()
 	{
+		product.Id = _prodId;
 		await dbContext.UpdateProductAsync(product);
 	}
 
@@ -102,6 +139,8 @@
 
 @functions
 {
+
+	
 
 	public string UpdatePrice()
 	{
@@ -156,4 +195,6 @@
 		}
 		return null;
 	}
+
+	
 }

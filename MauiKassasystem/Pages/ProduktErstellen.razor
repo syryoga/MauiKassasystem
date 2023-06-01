@@ -41,14 +41,15 @@
                 </p>
                 <p>
                     <label>Bild auswählen:</label>
-                    <select name="ProduktBild" required @bind="product.ProduktBild">
+	                <select name="ProduktBild" required @bind="product.ProduktBild">
 
-                        @foreach (var item in kategorie)
-                        {
-                            <option value="@item.KategorieBild">@item.KategorieName</option>
+		                @foreach (var item in pictures)
+		                {
+			                <option value="@item.Value">@item.Key</option>
 
-                        }
-                    </select>
+		                }
+	                </select>
+	                <img height="32" src="@product.ProduktBild" />
                 </p>
                 <p>
                     <label>Preis eingeben:</label>
@@ -65,6 +66,9 @@
 </div>
 
 @code {
+
+	Dictionary<string, string> pictures = new();
+
     Produkt product = new Produkt();
 
     List<Kategorie> kategorie = new List<Kategorie>();
@@ -92,6 +96,18 @@
     {
         ResetForm();
         await dbContext.AllProductsToListAsync();
+	    pictures.Add("Infused", "drawable/kalt_infused.png");
+	    pictures.Add("Mineral", "drawable/kalt_mineral.png");
+	    pictures.Add("Saft", "drawable/kalt_saft.png");
+	    pictures.Add("Shake", "drawable/kalt_shake.png");
+	    pictures.Add("Smoothie", "drawable/kalt_smoothie.png");
+	    pictures.Add("Obst", "drawable/snack_obst.png");
+	    pictures.Add("Sandwich", "drawable/snack_sandwich.png");
+	    pictures.Add("Kuchen", "drawable/sonst_kuchen.png");
+	    pictures.Add("Trinken", "drawable/sonst_trinken.png");
+	    pictures.Add("Kaffe", "drawable/warm_kaffee.png");
+	    pictures.Add("Milch", "drawable/warm_milch.png");
+	    pictures.Add("Tee", "drawable/warm_tee.png");
         kategorie = await dbContext.AllCategoriesToListAsync();
     }
 }
