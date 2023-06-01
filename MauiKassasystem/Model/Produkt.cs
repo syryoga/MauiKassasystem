@@ -11,6 +11,7 @@ namespace MauiKassasystem.Model
         public int Id { get; set; }
         [Indexed]
         public int KategorieId { get; set; }
+        [NotNull]
         public string ProduktName { get; set; }
         public string ProduktBild { get; set; }
         public decimal ProduktPreis { get; set; }

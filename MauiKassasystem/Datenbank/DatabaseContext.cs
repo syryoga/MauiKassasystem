@@ -68,6 +68,8 @@ namespace MauiKassasystem.Datenbank
                     await CreateDefaultProductsAsync();
 
 
+                    
+               
                
             }
 

@@ -13,10 +13,12 @@ namespace MauiKassasystem.Model
 
         [ForeignKey("ProduktId")]
         public int ProduktId { get; set; }
+        public string ProduktName { get; set; }
 
         public int Anzahl { get; set; }    
         public decimal Einzelpreis { get; set; }
         public decimal Gesamtpreis { get; set; }
+        public DateTime Datum { get; set; }
 
     }
 }

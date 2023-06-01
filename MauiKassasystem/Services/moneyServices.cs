@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MauiKassasystem;
 
+
 namespace MauiKassasystem.Services
 {
     internal class moneyServices
@@ -34,10 +35,14 @@ namespace MauiKassasystem.Services
             foreach(var item in dbServices.orderList)
             {
                 Verkauf v = new Verkauf();
+                
                 v.ProduktId = item.Key.Id;
+                v.ProduktName = item.Key.ProduktName;
                 v.Anzahl = item.Value;
                 v.Einzelpreis = item.Key.ProduktPreis;
                 v.Gesamtpreis = item.Value * v.Einzelpreis;
+                v.Datum = DateTime.Now;
+
 
                 DatabaseContext dbContext = new DatabaseContext(Path.Combine(FileSystem.AppDataDirectory, "kassadbtest.sqlite1"));
                 await dbContext.SaveSaleAsync(v);
