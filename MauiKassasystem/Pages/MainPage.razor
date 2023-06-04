@@ -1,5 +1,6 @@
 ﻿@page "/"
 @inject DatabaseContext dbContext
+@inject NavigationManager navman
 
 
 
@@ -7,7 +8,7 @@
     <div class="topbar">
         <div class="logo-wrapper">
             <a href="#"><img src="drawable/Logo_BBRZ.png" alt="BBRZ" height="50" /></a>
-            <a class="admin-button button-primary" href="/produkt-bearbeiten" >PRODUKT BEARBEITEN</a>
+            <a class="admin-button button-primary" href="/produkt-bearbeiten">PRODUKT BEARBEITEN</a>
         </div>
         <h1 class="pagename">Kassasystem</h1>
         <div class="topbar-btn-wrapper">
@@ -16,10 +17,9 @@
                     Icon="icon-clipboard"
                     Name="TAGESABSCHLUSS" />
 
-            <Button 
-                    Icon="icon-bin"
+            <Button Icon="icon-bin"
                     Name="STORNO"
-                    OnClickAction="ShowPopup"/>
+                    OnClickAction="ShowPopup" />
 
             <Button Href="/login-admin"
                     Icon="icon-user"
@@ -34,7 +34,7 @@
                 <div>Produkt</div>
                 <div>Bestellung</div>
             </div>
-            
+
             <div class="light-box kategorie-box">
                 @if (kategories != null)
                 {
@@ -42,7 +42,7 @@
                         @foreach (var kategorie in kategories)
                         {
                             <div class="kategorie" @onclick="() => ShowId(kategorie.Id)">
-                                
+
                                 <img src="@kategorie.KategorieBild">
                                 <div>@kategorie.KategorieName</div>
                             </div>
@@ -80,7 +80,7 @@
                     {
                         @foreach (var product in dbServices.orderList)
                         {
-	                        
+
                             <div class="order-line">
                                 <span>@product.Value.ToString()x</span>
                                 <span>@product.Key.ProduktName</span>
@@ -99,12 +99,12 @@
             </div>
             <div class="buttons-box light-box">
 
-	            <Button Href="/bezahlungs-page"
-	                    Icon="icon-coin-euro"
-	                    Name="WECHSELGELD"
+                <Button Href="/bezahlungs-page"
+                        Icon="icon-coin-euro"
+                        Name="WECHSELGELD"
                         IsDisabled=@(dbServices.summ == 0) />
 
-	            <Button Href="/abschluss-page"
+                <Button Href="/abschluss-page"
                         Icon="icon-checkmark"
                         Name="ABSCHLUSS"
                         IsDisabled=@(dbServices.summ == 0)
@@ -124,15 +124,17 @@
                 <button class="m-button button-primary" @onclick="ClosePopup">Abbrechen</button>
             </div>
         </div>
+        @if (stornoSuccessful)
+        {
+            <div class="storno-success-message">
+                Sie haben den letzten Abschluss erfolgreich storniert!!!
+            </div>
+        }
     }
-
 
 </div>
 
 @code {
-
-
-
 
     List<Kategorie> kategories = new List<Kategorie>();
     List<Produkt> products = new List<Produkt>();
@@ -170,7 +172,6 @@
     }
 
 
-
     public static void TotalPriceCalculation()
     {
         decimal price = 0;
@@ -198,10 +199,6 @@
         showPopup = true;
     }
 
-    void ClosePopup()
-    {
-        showPopup = false;
-    }
     //Popup end
 
     // Property für die Popup-Steuerung
@@ -220,6 +217,8 @@
     }
 
     // Methode zum Behandeln der Storno-Aktion
+    bool stornoSuccessful = false;
+
     public async void HandleStorno()
     {
         List<Verkauf> posList = new List<Verkauf>();
@@ -232,27 +231,20 @@
 
         await dbContext.SaveStornoAsync(lastTimeStamp);
 
+        stornoSuccessful = true;
 
 
-
-        // Fügen Sie hier den Code ein, der bei Storno ausgeführt werden soll
         CloseConfirmationPopup();
+
+        // Weiterleitung zur Hauptseite
+        navman.NavigateTo("/");
     }
 
-    //public async Task AddPRoduktToOrderList(Produkt produkt)
-    //{
-    //    public Dictionary<Produkt, int> orderList = new Dictionary<Produkt, int>();
+    void ClosePopup()
+    {
+        showPopup = false;
+    }
 
-    //    if (!orderList.ContainsKey(produkt))
-    //    {
-    //        orderList.Add(produkt, 1);
-    //    }
-    //    else
-    //    {
-    //        orderList[produkt] += 1;
-    //    }
-    //    //TotalPriceCalculation();
-    //}
 }
 
 

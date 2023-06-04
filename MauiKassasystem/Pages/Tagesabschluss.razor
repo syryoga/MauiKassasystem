@@ -1,9 +1,5 @@
 ﻿@page "/tages-abschluss"
 
-
-
-
-
 <div class="dark-box admin-form-box">
 
     <div class="tagesabschluss">
@@ -15,9 +11,6 @@
     </div>
 
     <br />
-
-
-
 
     <div class="btn-wrapper">
 
@@ -38,18 +31,7 @@
                 Name="ZURÜCK" />
     </div>
 
-
-
 </div>
-
-
-
-
-
-
-
-
-
 @code {
     List<Verkauf> posList = new List<Verkauf>();
 
@@ -69,7 +51,15 @@
 
     public async void ExportVerkaufData()
     {
-        //string csvFilePath = Path.Combine("/storage/emulated/0/Documents/test1.csv");
+        //Diese CodeZeile benötigt man wenn man das Programm mit dem Tablet Emulator ausführen möchte
+
+        //string csvFilePath = Path.Combine(@$"/storage/emulated/0/Documents/{DateTime.Now.ToString("MM/dd/yyyy")}.csv");
+
+        // --------------------------------------------------------------------------------
+
+        // Diesen Pfad muss man einkommentieren wenn man das Programm mit Windows Machine ausführen möchte
+        // und den in Zeile 58 dann auskommentieren!!!!
+
         string csvFilePath = @"C:\Users\PC98FA9BFD51B5\source\repos\syryoga\test2.csv";
         await ExportVerkaufDataToCSV(csvFilePath);
     }

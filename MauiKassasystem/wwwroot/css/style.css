@@ -84,7 +84,6 @@ h1 {
 }
 
 
-
 .wrapper {
     display: grid;
     grid-template-rows: 50px 1fr;
@@ -113,4 +112,10 @@ h1 {
 .button-primary {
     background-color: var(--primary-color);
     color: var(--light);
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.button-primary:hover {
+    border-color: var(--secondary-color);
+    transition: border-color linear 0.5s;
 }

@@ -1,8 +1,5 @@
 ﻿@page "/wechselgeld-page"
 
-
-
-
 <div class="wrapper">
     <div class="topbar">
         <div class="logo-wrapper">
@@ -23,7 +20,7 @@
                 {
                     <p class="message">Der gegebene Betrag stimmt <br /> mit der Summe überein!</p>
                     <img class="gif" src="drawable/thumbs_up_animated.gif"/>
-                    <p class="instruction">Bestellund mittlels 'Abschluss'- Button <br>abschließen!</p>
+                    <p class="instruction">Bestellung mit 'Abschluss'- Button <br>abschließen!</p>
 
                 }
                 @foreach (var nominal in moneyServices.moneyList)
@@ -77,7 +74,6 @@
 </div>
 
 
-
 @code {
     decimal exchangeMoney = dbServices.recivedMoney - dbServices.summ;
 
@@ -98,13 +94,5 @@
                 moneyServices.moneyList[i].Counter += 1;
             }
         }
-
-
-
-
     }
-
- 
-
-
 }

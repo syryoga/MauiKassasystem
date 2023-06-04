@@ -1,5 +1,4 @@
 ﻿using MauiKassasystem.Datenbank;
-
 namespace MauiKassasystem;
 
 public static class MauiProgram
@@ -7,10 +6,6 @@ public static class MauiProgram
     public static MauiApp CreateMauiApp()
     {
         
-
-
-
-
     var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
@@ -18,7 +13,6 @@ public static class MauiProgram
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
             });
-
 
 
         builder.Services.AddMauiBlazorWebView();
@@ -30,7 +24,8 @@ public static class MauiProgram
 
         var dbPath = "";
 
-        var dbFileName = "kassadb.sqlite";
+        // Möchte man eine neue Datenbank haben dann hier den dbFileName z.B.:"kassadbWien.sqlite" einfach umbenennen!. 
+        var dbFileName = "kassadb15.sqlite";
 
         if (platform == DevicePlatform.Android)
         {
@@ -47,7 +42,6 @@ public static class MauiProgram
         }
 
         builder.Services.AddSingleton<DatabaseContext>(s => ActivatorUtilities.CreateInstance<DatabaseContext>(s, dbPath));
-
         return builder.Build();
     }
 }

@@ -24,9 +24,5 @@ namespace MauiKassasystem.Services
 
         public static Dictionary<Produkt, int> orderList = new Dictionary<Produkt, int>();
 
-
-        
-
-
     }
 }

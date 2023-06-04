@@ -39,7 +39,7 @@
                                 <h4>Achtung!!!</h4>
                                 <p>Wollen Sie wirklich zurücksetzen?</p>
                                 <button  class="m-button button-primary" @onclick="StartResetPassword">Zurücksetzen</button>
-                                <button class="m-button button-primary" @onclick="ClosePopup">Abrechen</button>
+                                <button class="m-button button-primary" @onclick="ClosePopup">Abbrechen</button>
                             </div>
                         </div>
                     }
@@ -52,21 +52,21 @@
                     @if (!IsMasterPassword)
                     {
                         <h2>Mit Masterpasswort anmelden</h2>
-                        <input type="password" placeholder="Master Paswort" autocomplete="off" @bind-value="@Password"/>
+                        <input type="password" placeholder="Master Passwort" autocomplete="off" @bind-value="@Password"/>
                         <br />
                         <button class="m-button button-primary" @onclick="AreMasterPasswordsMatching">Anmelden</button>
                     }
 
                     @if (IsMasterPassword)
                     {
-                        <h3>Bitte geben sie ein neus Passwort ein:</h3>
-                        <input type="password" style="margin:20px 0;" placeholder="Neues Paswort" @bind-value="@NewPassword" @bind-value:event="oninput" />
+                        <h3>Bitte geben sie ein neues Passwort ein:</h3>
+                        <input type="password" style="margin:20px 0;" placeholder="Neues Passwort" @bind-value="@NewPassword" @bind-value:event="oninput" />
                         <br />
-                        <input type="password" style="margin:20px 0;" placeholder="Paswort wiederholen" @bind-value="@ConfirmNewPassword" @bind-value:event="oninput" @onchange="CheckPasswordMatch" />
+                        <input type="password" style="margin:20px 0;" placeholder="Passwort wiederholen" @bind-value="@ConfirmNewPassword" @bind-value:event="oninput" @onchange="CheckPasswordMatch" />
                         <br />
                         @if (ShowPasswordMismatchError)
                         {
-                            <p style="color: red;">Die eingaben stimmen nicht überein.</p>
+                            <p style="color: red;">Die Eingaben stimmen nicht überein.</p>
                         }
                         <button class="m-button button-primary" @onclick="passwortServices.SaveNewPassword" disabled="@(!ArePasswordsMatching())">Speichern</button>
                         @*<button class="m-button button-primary" @onclick="CancelResetPassword">Abbrechen</button>*@
@@ -202,7 +202,4 @@
     {
         ShowPasswordMismatchError = NewPassword != ConfirmNewPassword;
     }
-
-
-
 }

@@ -1,1 +1,9 @@
-﻿
+﻿Seite MauiProgramm:
+
+Hier sind 2 Pfadangaben
+der 1.Pfad ist für Android. Da wir keine Rechte haben können wir uns nicht mit der Datenbank am Tablet verbinden
+weil der Pfad höchstwahrscheinlich gemappt wird und wir den nicht ausfindig machen können.
+
+Der 2.Pfad ist für Windows 
+
+Pfad string csvFilePath = @"C:\Users\PC98FA9BFD51B5\source\repos\syryoga\test2.csv";

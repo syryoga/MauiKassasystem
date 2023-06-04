@@ -19,7 +19,6 @@
 }
 
 
-
 @code {
     List<Kategorie> catList = new List<Kategorie>();
     List<VkPositionen> vkList = new List<VkPositionen>();
@@ -31,5 +30,4 @@
         vkList = await dbContext.AllSalesToListAsync();
         posList = await dbContext.VkPositionsToListAsync();
     }
-    
 }

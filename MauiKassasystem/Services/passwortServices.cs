@@ -15,7 +15,6 @@ namespace MauiKassasystem.Services
 
         static public Zugangsdaten adminzugangsdaten = new Zugangsdaten { AdminEmail = "test@test.com", AdminPassword = "123" };
 
-
         //Löscht das alte Passwort aus der Liste und speichert das neue
         static public void SaveNewPassword()
         {
@@ -35,11 +34,7 @@ namespace MauiKassasystem.Services
                 {
                     LoginAdmin.ShowPasswordMismatchError = true;
                 }
-
-
             }
         }
-    }
-
-    
+    } 
 }

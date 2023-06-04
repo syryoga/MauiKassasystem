@@ -4,7 +4,6 @@
 
 <div class="admin-wrapper">
 
-
 	<div class="topbar">
 		<div class="logo-wrapper">
 			<a href="#"><img src="drawable/Logo_BBRZ.png" alt="BBRZ" height="50" /></a>
@@ -14,9 +13,6 @@
 			<a class="button-primary logout-btn" href="/"><span>ZURÜCK</span></a>
 		</div>
 	</div>
-
-
-
 
 
     <div class="admin-form-wrapper">
@@ -39,7 +35,7 @@
 				<p><label>Kategorie:</label><input value="@_catName" disabled="disabled" /> @*<input placeholder="Neue Kategorie" @bind-value="product.KategorieId" style="margin-left: 70px;" />*@
 
 					<select @bind="product.KategorieId" style="margin-left: 70px;">
-						<option disabled="disabled" hidden checked>Neue Kategorie</option>
+						<option hidden checked>Neue Kategorie</option>
 						@foreach (var item in kategories)
 						{
 							<option value="@item.Id">@item.KategorieName</option>
@@ -54,7 +50,7 @@
 						<img height="32" src="@_catPic"/>
 					}
 					
-					<select @bind="product.ProduktBild" style="margin-left: 210px;">
+					<select @bind="product.ProduktBild" style="margin-left: 215px;">
 						@foreach (var item in pictures)
 						{
 							<option value="@item.Value"><p> @item.Key </p></option>
@@ -65,9 +61,6 @@
 					
 					<img height="32" src="@product.ProduktBild" />
 					
-							
-					
-					
 
 				</p>
 				<p><label>Preis:</label><input type="text" value="@_prodPrice" disabled="disabled" />&euro; <input type="text" placeholder="Neuer Preis" @bind-value="product.ProduktPreis" style="margin-left: 70px;" />&euro;</p>
@@ -77,22 +70,13 @@
 			</form>
 
 		</div>
-	</div>
-
-	
+	</div>	
 </div>
 
 @code {
 
 	Dictionary<string, string> pictures = new();
 
-
-
-
-	
-	
-	
-	
 
 	List<Produkt> products = new();
 
@@ -133,15 +117,10 @@
 		product.Id = _prodId;
 		await dbContext.UpdateProductAsync(product);
 	}
-
-
 }
 
 @functions
 {
-
-	
-
 	public string UpdatePrice()
 	{
 		foreach (var item in products)
@@ -195,6 +174,4 @@
 		}
 		return null;
 	}
-
-	
 }
